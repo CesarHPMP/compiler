@@ -7,29 +7,25 @@ void E_linha();
 void T();
 void T_linha();
 void F();
-void consome(int);
+void consome(int, arvore);
 void erro_sint();
-
-
-
+int calcular(arvore);
 
 int main()
 {
     token = analex();
+    
     E();
+
     if(token == ';')
         printf("Sem erros sintaticos");
     else
         erro_sint();
 
+    calcular();
+
     return 0;
 }
-
-
-
-
-
-
 
 void E()
 {
