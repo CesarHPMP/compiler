@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <pilha.h>
 
 #define NUM 256
 #define ID 257
@@ -55,7 +56,7 @@ int analex()
         while(isdigit(ch))
         {
             temp_tokenval = ch - '0';
-            tokenval = temp_tokenval + tokenval; 
+            tokenval = (tokenval * 10) + temp_tokenval; 
             ch = getchar();
         }
         return NUM;

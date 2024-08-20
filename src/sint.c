@@ -9,13 +9,14 @@ void T_linha();
 void F();
 void consome(int, arvore);
 void erro_sint();
-int calcular(arvore);
+int calcular(Pilha);
 
 int main()
 {
     token = analex();
     
     E();
+
 
     if(token == ';')
         printf("Sem erros sintaticos");
@@ -39,12 +40,14 @@ void E_linha()
     {
     case '+':
         consome('+');
+        push(token);
         T();
         E_linha();
         break;
     
     case '-':
         consome('-');
+        push(token)
         T();
         E_linha();
         break;
@@ -90,10 +93,12 @@ void F()
     
     case NUM:
         consome(NUM);
+        push(token);
         break;
 
     case ID:
         consome(ID);
+        push(token);
         break;
 
     default:
@@ -114,4 +119,9 @@ void erro_sint()
 {
     printf("ERRO SINTATICO LINHA X: Token invalido");
     exit(1);
+}
+
+int calcular(Pilha pilha)
+{
+
 }
