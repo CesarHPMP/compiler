@@ -1,4 +1,8 @@
 #include "analex.h"
+#ifndef PILHA_H__
+#include "pilha.h"
+#define PILHA_H__
+#endif // PILHA_H__
 
 int token;
 
@@ -7,23 +11,24 @@ void E_linha();
 void T();
 void T_linha();
 void F();
-void consome(int, arvore);
+void consome(int);
 void erro_sint();
-int calcular(Pilha);
 
 int main()
 {
     token = analex();
-    
+
     E();
 
+    int holder = tam;
+
+    while(holder > 0)
+        printf("\npilha: %d\n", Pilha[holder--]);
 
     if(token == ';')
         printf("Sem erros sintaticos");
     else
-        erro_sint();
-
-    calcular();
+        erro_sint(30);
 
     return 0;
 }
@@ -40,15 +45,19 @@ void E_linha()
     {
     case '+':
         consome('+');
-        push(token);
         T();
+        a = pop();
+        b = pop();
+        push(a + b);
         E_linha();
         break;
-    
+
     case '-':
         consome('-');
-        push(token)
         T();
+        a = pop();
+        b = pop();
+        push(a * b);
         E_linha();
         break;
     }
@@ -67,12 +76,18 @@ void T_linha()
     case '*':
         consome('*');
         F();
+        a = pop();
+        b = pop();
+        push(a * b);
         T_linha();
         break;
-    
+
     case '/':
         consome('/');
         F();
+        a = pop();
+        b = pop();
+        push(a / b);
         T_linha();
         break;
 
@@ -90,19 +105,18 @@ void F()
         E();
         consome(')');
         break;
-    
+
     case NUM:
         consome(NUM);
-        push(token);
+        push(tokenval);
         break;
 
     case ID:
         consome(ID);
-        push(token);
         break;
 
     default:
-        erro_sint();
+        erro_sint(119);
     }
 }
 
@@ -112,16 +126,12 @@ void consome(int t)
         token = analex();
 
     else
-        erro_sint();
+        erro_sint(129);
 }
 
-void erro_sint()
+void erro_sint(int linha)
 {
-    printf("ERRO SINTATICO LINHA X: Token invalido");
+    printf("ERRO SINTATICO LINHA  %i: Token invalido", linha);
     exit(1);
 }
 
-int calcular(Pilha pilha)
-{
-
-}

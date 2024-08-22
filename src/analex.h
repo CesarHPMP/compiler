@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <pilha.h>
 
 #define NUM 256
 #define ID 257
@@ -9,21 +8,28 @@
 #define PRINT 259
 
 int analex();
-int erro_lex();
-
+void erro_lex(int );
 int tokenval = 0;
+int linha_input = 0;
 
 int analex()
 {
     char ch;
     int temp_tokenval;
     ch = getchar();
+    linha_input++;
+
+    while(isspace(ch))
+    {
+        linha_input++;
+        ch = getchar();
+    }
 
     switch (ch)
     {
     case '+':
         return '+';
-           
+
     case '/':
         return '/';
 
@@ -43,31 +49,30 @@ int analex()
         return ';';
 
     default:
-        if(ch == '\n' || '\t' || ' ')
+        if(isdigit(ch))
         {
-            return 
+        tokenval = 0;
+            while(isdigit(ch))
+            {
+                temp_tokenval = ch - '0';
+                tokenval = (tokenval * 10) + temp_tokenval;
+                ch = getchar();
+
+            }
+            ungetc(ch, stdin);
+            return NUM;
         }
-        else
-            erro_lex();
+
+        printf("CH é %i\n", ch);
+        erro_lex(54);
     }
 
-    if(isdigit(ch))
-    {
-        while(isdigit(ch))
-        {
-            temp_tokenval = ch - '0';
-            tokenval = (tokenval * 10) + temp_tokenval; 
-            ch = getchar();
-        }
-        return NUM;
-    }
 
-    printf("ERRO LEXICO LINHA X: Token invalido");
-    exit(1);
+    erro_lex(67);
 }
 
-void erro_lex()
+void erro_lex(int linha)
 {
-    printf("ERRO lexico LINHA X: input invalido");
+    printf("ERRO lexico LINHA %i: input invalido \n", linha);
     exit(1);
 }
