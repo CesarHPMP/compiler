@@ -8,7 +8,7 @@
 #define PRINT 259
 
 int analex();
-void erro_lex(int );
+void erro_lex(int ,int );
 int tokenval = 0;
 int linha_input = 0;
 
@@ -57,22 +57,22 @@ int analex()
                 temp_tokenval = ch - '0';
                 tokenval = (tokenval * 10) + temp_tokenval;
                 ch = getchar();
-
+                linha_input++;
             }
             ungetc(ch, stdin);
             return NUM;
         }
 
         printf("CH é %i\n", ch);
-        erro_lex(54);
+        erro_lex(54, linha_input);
     }
 
 
-    erro_lex(67);
+    erro_lex(67, linha_input);
 }
 
-void erro_lex(int linha)
+void erro_lex(int linha, int linha_input)
 {
-    printf("ERRO lexico LINHA %i: input invalido \n", linha);
+    printf("ERRO lexico LINHA %i, input %i: input invalido \n", linha, linha_input);
     exit(1);
 }
