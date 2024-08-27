@@ -11,8 +11,8 @@ void E_linha();
 void T();
 void T_linha();
 void F();
-void consome(int);
-void erro_sint();
+void consome(int );
+void erro_sint(int ,int );
 
 int main()
 {
@@ -28,7 +28,7 @@ int main()
     if(token == ';')
         printf("Sem erros sintaticos");
     else
-        erro_sint(30);
+        erro_sint(30,  linha_input);
 
     return 0;
 }
@@ -116,7 +116,7 @@ void F()
         break;
 
     default:
-        erro_sint(119);
+        erro_sint(119, linha_input);
     }
 }
 
@@ -129,9 +129,9 @@ void consome(int t)
         erro_sint(129);
 }
 
-void erro_sint(int linha)
+void erro_sint(int linha, int linha_input)
 {
-    printf("ERRO SINTATICO LINHA  %i: Token invalido", linha);
+    printf("ERRO SINTATICO LINHA  %i: Token invalido", linha, linha_input);
     exit(1);
 }
 
