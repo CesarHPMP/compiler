@@ -57,7 +57,6 @@ int analex()
                 temp_tokenval = ch - '0';
                 tokenval = (tokenval * 10) + temp_tokenval;
                 ch = getchar();
-                linha_input++;
             }
             ungetc(ch, stdin);
             return NUM;
