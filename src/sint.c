@@ -3,8 +3,14 @@
 #include "pilha.h"
 #define PILHA_H__
 #endif // PILHA_H__
+#include <string.h>
 
 int token;
+char num[1000];
+int savenum[1000];
+int y = 0;
+int x = 0;
+char charhold;
 
 void E();
 void E_linha();
@@ -17,16 +23,33 @@ void erro_sint();
 int main()
 {
     token = analex();
+    int j = 0;
 
     E();
 
-    int holder = tam;
-
-    while(holder > 0)
-        printf("\npilha: %d\n", Pilha[holder--]);
-
     if(token == ';')
-        printf("Sem erros sintaticos");
+    {
+        printf("EXPRESSAO CORRETA\n");
+        printf("NOTACAO POSFIXA: ");
+        for(int i = 0; i < y; i++)
+        {
+            printf("%i", savenum[i]);
+            if (i < y) 
+            {
+                printf(" ");
+            }
+        }
+        for(int i = 0; i < x; i++)
+        {
+            printf("%c", num[i]); 
+            if (i < y - 1) 
+            {
+                printf(" ");
+            }
+        }
+        printf("\n");
+        printf("RESULTADO DA EXPRESSAO: %i\n", pop());
+    }
     else
         erro_sint(30);
 
@@ -46,18 +69,24 @@ void E_linha()
     case '+':
         consome('+');
         T();
-        a = pop();
         b = pop();
+        a = pop();
         push(a + b);
+        charhold = '+';
+        strcpy(&num[x], &charhold);
+        x++;
         E_linha();
         break;
 
     case '-':
         consome('-');
         T();
-        a = pop();
         b = pop();
-        push(a * b);
+        a = pop();
+        push(a - b);
+        charhold = '-';
+        strcpy(&num[x], &charhold);
+        x++;
         E_linha();
         break;
     }
@@ -76,18 +105,24 @@ void T_linha()
     case '*':
         consome('*');
         F();
-        a = pop();
         b = pop();
+        a = pop();
         push(a * b);
+        charhold = '*';
+        strcpy(&num[x], &charhold);
+        x++;
         T_linha();
         break;
 
     case '/':
         consome('/');
         F();
-        a = pop();
         b = pop();
+        a = pop();
         push(a / b);
+        charhold = '/';
+        strcpy(&num[x], &charhold);
+        x++;
         T_linha();
         break;
 
@@ -108,6 +143,8 @@ void F()
 
     case NUM:
         consome(NUM);
+        savenum[y] = tokenval;
+        y++;
         push(tokenval);
         break;
 
@@ -131,7 +168,7 @@ void consome(int t)
 
 void erro_sint(int linha)
 {
-    printf("ERRO SINTATICO LINHA  %i: Token invalido", linha);
+    printf("ERRO SINTATICO na LINHA %i\n", linha);
     exit(1);
 }
 
