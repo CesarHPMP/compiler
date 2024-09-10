@@ -23,6 +23,7 @@ void erro_sint();
 int main()
 {
     token = analex();
+
     int j = 0;
 
     E();
@@ -153,7 +154,7 @@ void F()
         break;
 
     default:
-        erro_sint(119);
+        erro_sint(linha_input);
     }
 }
 
@@ -163,12 +164,12 @@ void consome(int t)
         token = analex();
 
     else
-        erro_sint(129);
+        erro_sint(linha_input);
 }
 
 void erro_sint(int linha)
 {
-    printf("ERRO SINTATICO na LINHA %i\n", linha);
+    printf("ERRO SINTATICO NA LINHA %i\n", linha);
     exit(1);
 }
 

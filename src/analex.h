@@ -10,21 +10,20 @@
 int analex();
 void erro_lex(int );
 int tokenval = 0;
-int linha_input = 0;
+int linha_input = 1;
 
 int analex()
 {
     char ch;
     int temp_tokenval;
     ch = getchar();
-    linha_input++;
 
     while(isspace(ch))
     {
-        linha_input++;
+        if(ch == '\n')
+            linha_input++;
         ch = getchar();
     }
-
     switch (ch)
     {
     case '+':
@@ -63,16 +62,15 @@ int analex()
             return NUM;
         }
 
-        printf("CH é %i\n", ch);
-        erro_lex(54);
+        erro_lex(linha_input);
     }
 
 
-    erro_lex(67);
+    erro_lex(linha_input);
 }
 
 void erro_lex(int linha)
 {
-    printf("ERRO lexico LINHA %i: input invalido \n", linha);
+    printf("ERRO LEXICO NA LINHA %i\n", linha);
     exit(1);
 }
