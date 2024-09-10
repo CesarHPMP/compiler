@@ -20,6 +20,8 @@ void F();
 void consome(int);
 void erro_sint();
 
+// Configurar resto do output para bater com o exigido.
+
 int main()
 {
     token = analex();
