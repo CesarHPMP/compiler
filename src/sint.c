@@ -16,7 +16,7 @@ void T();
 void T_linha();
 void F();
 void consome(int);
-void erro_sint();
+void erro_sint(int);
 
 // Configurar resto do output para bater com o exigido.
 
@@ -35,7 +35,7 @@ int main()
         printf("RESULTADO DA EXPRESSAO: %i\n", pop());
     }
     else
-        erro_sint(30);
+        erro_sint(linha_input);
 
     return 0;
 }
