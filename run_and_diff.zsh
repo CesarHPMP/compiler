@@ -13,17 +13,18 @@ EXPECTED_OUTPUT_FILES=("saida1.txt" "saida2.txt" "saida3.txt" "saida4.txt" "said
 if [ ! -d "$DATA_DIR" ]; then
     echo "Error: Directory '$DATA_DIR' not found."
     exit 1
-fi 
+fi
 
 # Check if the executable exists
 if [ ! -x "$EXECUTABLE" ]; then
     echo "Error: Executable $EXECUTABLE not found or not executable."
     gcc src/sint.c -o src/sint
-    echo "Built executable"
+    echo -e "Executable has been compiled\n"
 fi
 
 # Function to run the executable and compare output
-run_and_compare() {
+run_and_compare() 
+{
     local input_file=$1
     local expected_output_file=$2
 
@@ -33,13 +34,12 @@ run_and_compare() {
     # Run the executable and capture the output
     "$EXECUTABLE" < "${DATA_DIR}${input_file}" > "$ACTUAL_OUTPUT_FILE"
 
-    # Compare the actual output with the expected output, ignoring whitespaces and blank lines
-    echo "Comparing $input_file with $expected_output_file:"
-    diff -Bw "$ACTUAL_OUTPUT_FILE" "${DATA_DIR}${expected_output_file}"
+    # Compare the actual output with the expected output
+    diff -Bw "$ACTUAL_OUTPUT_FILE" "${DATA_DIR}/${expected_output_file}"
     if diff -Bw "$ACTUAL_OUTPUT_FILE" "${DATA_DIR}/${expected_output_file}" > /dev/null; then
-        echo -e "Outputs match for ${input_file}\n"
+        echo -e "Outputs match for ${input_file} \n"
     else
-        echo -e "Outputs do not match for ${input_file}\n"
+        echo -e "Outputs do not match for ${input_file} \n"
     fi
 }
 
@@ -50,12 +50,12 @@ for ((i=1; i<=${#INPUT_FILES[@]}; i++)); do
 
     # Check if input and expected output files exist
     if [ ! -f "${DATA_DIR}${INPUT_FILE}" ]; then
-        echo -e "\nError: Input file ${DATA_DIR}${INPUT_FILE} not found."
+        echo -e "Error: Input file ${DATA_DIR}${INPUT_FILE} not found.\n"
         continue
     fi
 
     if [ ! -f "${DATA_DIR}${EXPECTED_OUTPUT_FILE}" ]; then
-        echo -e "\nError: Expected output file ${DATA_DIR}${EXPECTED_OUTPUT_FILE} not found."
+        echo -e "Error: Expected output file ${DATA_DIR}${EXPECTED_OUTPUT_FILE} not found.\n"
         continue
     fi
 

@@ -7,8 +7,6 @@
 
 int token;
 char num[1000];
-int savenum[1000];
-int y = 0;
 int x = 0;
 char charhold;
 
@@ -33,24 +31,7 @@ int main()
     if(token == ';')
     {
         printf("EXPRESSAO CORRETA\n");
-        printf("NOTACAO POSFIXA: ");
-        for(int i = 0; i < y; i++)
-        {
-            printf("%i", savenum[i]);
-            if (i < y) 
-            {
-                printf(" ");
-            }
-        }
-        for(int i = 0; i < x; i++)
-        {
-            printf("%c", num[i]); 
-            if (i < y - 1) 
-            {
-                printf(" ");
-            }
-        }
-        printf("\n");
+        printf("NOTACAO POSFIXA: %s\n", num);  
         printf("RESULTADO DA EXPRESSAO: %i\n", pop());
     }
     else
@@ -78,6 +59,8 @@ void E_linha()
         charhold = '+';
         strcpy(&num[x], &charhold);
         x++;
+        num[x] = ' ';
+        x++;
         E_linha();
         break;
 
@@ -89,6 +72,8 @@ void E_linha()
         push(a - b);
         charhold = '-';
         strcpy(&num[x], &charhold);
+        x++;
+        num[x] = ' ';
         x++;
         E_linha();
         break;
@@ -107,25 +92,29 @@ void T_linha()
     {
     case '*':
         consome('*');
+        T_linha();
         F();
-        b = pop();
-        a = pop();
-        push(a * b);
         charhold = '*';
         strcpy(&num[x], &charhold);
         x++;
-        T_linha();
+        num[x] = ' ';
+        x++;
+        b = pop();
+        a = pop();
+        push(a * b);
         break;
 
     case '/':
         consome('/');
         F();
-        b = pop();
-        a = pop();
-        push(a / b);
         charhold = '/';
         strcpy(&num[x], &charhold);
         x++;
+        num[x] = ' ';
+        x++;
+        b = pop();
+        a = pop();
+        push(a / b);
         T_linha();
         break;
 
@@ -146,8 +135,33 @@ void F()
 
     case NUM:
         consome(NUM);
-        savenum[y] = tokenval;
-        y++;
+        int make_char = tokenval;
+        int len = 0;
+        while (make_char != 0)
+        {
+            make_char = make_char/10;
+            len++;
+        }
+
+        if (len == 0) 
+        {
+            len = 1;
+            num[x] = '0';
+            x++;
+        }
+
+        make_char = tokenval;
+
+        for (int i = (len - 1) + x; i >= x; i--)
+        {
+        num[i] = (make_char % 10) + '0';
+        make_char /= 10;
+        }
+
+        x += len;
+        num[x] = ' ';
+        x++;
+
         push(tokenval);
         break;
 
