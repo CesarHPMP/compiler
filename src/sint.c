@@ -92,7 +92,6 @@ void T_linha()
     {
     case '*':
         consome('*');
-        T_linha();
         F();
         charhold = '*';
         strcpy(&num[x], &charhold);
@@ -102,6 +101,7 @@ void T_linha()
         b = pop();
         a = pop();
         push(a * b);
+        T_linha();
         break;
 
     case '/':
