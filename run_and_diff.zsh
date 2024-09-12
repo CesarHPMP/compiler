@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 # Define paths (with trailing slash)
 DATA_DIR="DATA/"
@@ -44,7 +44,7 @@ run_and_compare()
 }
 
 # Iterate over input and expected output files using a robust loop
-for ((i=1; i<=${#INPUT_FILES[@]}; i++)); do
+for ((i=0; i<=${#INPUT_FILES[@]}; i++)); do
     INPUT_FILE="${INPUT_FILES[$i]}"
     EXPECTED_OUTPUT_FILE="${EXPECTED_OUTPUT_FILES[$i]}"
 
