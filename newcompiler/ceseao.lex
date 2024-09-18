@@ -4,108 +4,86 @@
     int nline = 1;
 %}
 
-/*Expressoes Regulares simple */
+/* Regular Expressions */
 Dig [0-9]
-DigNO [1-9]
-Letra [a-z A-Z]
+Letra [a-zA-Z]
 
 %%
 
 "//".*  { /* Ignore single-line comments */ }
 "/*"([^*]|\*[^/])*"*/"  { /* Ignore multi-line comments */ }
 
-"+" {return PLUS;}
-"break" {return BREAK;}
-"case" {return CASE;}
-"catch" {return CATCH;}
-"char" {return CHAR;}
-"const" {return CONST;}
-"continue" {return CONTINUE;}
-"default" {return DEFAULT;}
-"do" {return DO;}
-"double" {return DOUBLE;}
-"else" {return ELSE;}
-"enum" {return ENUM;}
-"export" {return EXPORT;}
-"extern" {return EXTERN;}
-"float_const" {return FLOAT_CONST;}
-"goto" {return GOTO;}
-"hex_const" {return HEX_CONST;}
-"import" {return IMPORT;}
-"inline" {return INLINE;}
-"long" {return LONG;}
-"namespace" {return NAMESPACE;}
-"oct_const" {return OCT_CONST;}
-"private" {return PRIVATE;}
-"protected" {return PROTECTED;}
-"public" {return PUBLIC;}
-"register" {return REGISTER;}
-"restrict" {return RESTRICT;}
-"return" {return RETURN;}
-"short" {return SHORT;}
-"signed" {return SIGNED;}
-"sizeof" {return SIZEOF;}
-"static" {return STATIC;}
-"struct" {return STRUCT;}
-"switch" {return SWITCH;}
-"template" {return TEMPLATE;}
-"this" {return THIS;}
-"throw" {return THROW;}
-"try" {return TRY;}
-"typedef" {return TYPEDEF;}
-"union" {return UNION;}
-"unsigned" {return UNSIGNED;}
-"void" {return VOID;}
-"volatile" {return VOLATILE;}
-"while" {return WHILE_LOOP;}
+"+" {return PLUS;}                /* "ASSIST" */
+"-" {return MINUS;}               /* "BLOCK" */
+"*" {return TIMES;}               /* "MULTIPLY POINTS" */
+"/" {return DIVIDE;}              /* "DIVIDE POSSESSIONS" */
+"=" {return ASSIGN;}              /* "TIMEOUT" */
+"==" {return EQ;}                 /* "ALL-STAR GAME TIE" */
+"!=" {return NOTEQ;}              /* "MISSED SHOT" */
+">=" {return GE;}                 /* "OVERTIME GAME" */
+"<=" {return LTEQ;}               /* "GAME-WINNING SHOT" */
+"++" {return INC;}                /* "BACK-TO-BACK SHOTS" */
+"--" {return DEC;}                /* "BACK-TO-BACK TURNOVERS" */
+"&&" {return ANDAND;}             /* "LOCKDOWN DEFENSE" */
+"||" {return OROR;}               /* "SCREEN AND ROLL" */
+"!" {return NOT;}                 /* "FULL COURT PRESS" */
+"(" {return LPAREN;}              /* "START OF QUARTER" */
+")" {return RPAREN;}              /* "END OF QUARTER" */
+"{" {return LBRACE;}              /* "START OF HALF" */
+"}" {return RBRACE;}              /* "END OF HALF" */
+";" {return SEMICOLON;}           /* "HALFTIME BREAK" */
+"," {return COMMA;}               /* "ASSIST" */
+":" {return COLON;}               /* "COACH'S CHALLENGE" */
+"[" {return LBRACKET;}            /* "STARTING FIVE ANNOUNCEMENT" */
+"]" {return RBRACKET;}            /* "PLAYER INTRODUCTION" */
 
 
-"if" {return IF;}
-"int" {return INT;}
-"float" {return FLOAT;}
-"==" {return EQ;}
-">=" {return GE;}
-"-" {return MINUS;}
-"*" {return TIMES;}
-"/" {return DIVIDE;}
-"(" {return LPAREN;}
-")" {return RPAREN;}
-"{" {return LBRACE;}
-"}" {return RBRACE;}
-";" {return SEMICOLON;}
-"," {return COMMA;}
-":" {return COLON;}
-"=" {return ASSIGN;}
-"!=" {return NOTEQ;}
-"<>" {return LTGT;}
-"+=" {return PLUSASSIGN;}
-"-=" {return MINUSASSIGN;}
-"*=" {return TIMESASSIGN;}
-"/=" {return DIVIDEASSIGN;}
-"%=" {return MODASSIGN;}
-"++=" {return PLUSPLUSASSIGN;}
-"--=" {return MINUSMINUSASSIGN;}
-"[" {return LBRACKET;}
-"]" {return RBRACKET;}
-"%" {return MOD;}
-">>" {return GTGT;}
-"<<" {return LTLT;}
-"<=" {return LTEQ;}
-"&&" {return ANDAND;}
-"||" {return OROR;}
-"!" {return NOT;}
-"++" {return INC;}
-"--" {return DEC;}
+"RUN IT" {return DO;}  
+"NO PASS, TAKES IT TO THE RIM" {return WHILE_LOOP;}
+"BLOCKED BY JAMES" {return BREAK;} 
+"DECIDES NOT TO CALL A TIMEOUT" {return CONTINUE;} 
+"AIRNESS" {return CHAR;}
+"BIG FUNDAMENTAL" {return INT;}
+"LEBRONTO" {return FLOAT;} 
+"BIG DIESEL" {return STRING;}      
+"GOAT" {return CONST;}                     
+"FAST BREAK" {return GOTO;}                
+"NUMBER RETIRED" {return HEX_CONST;}       
+"NEW ROOKIE" {return IMPORT;}              
+"SEVEN-FOOTER" {return LONG;}              
+"TEAM HUDDLE" {return NAMESPACE;}          
+"OFF-THE-BENCH SCORER" {return PRIVATE;}   
+"LOCKDOWN DEFENDER" {return PROTECTED;}    
+"FRANCHISE PLAYER" {return PUBLIC;}        
+"BENCH WARMER" {return REGISTER;}          
+"NO TRADE CONTRACT" {return RESTRICT;} 
+"SHOT CLOCK EXPIRED" {return RETURN;}     
+"FLOATER IN THE LANE" {return SHORT;}     
+"SHOOTING FOUL" {return SIGNED;}          
+"SHOT ATTEMPT" {return SIZEOF;}           
+"INJURED RESERVE" {return STATIC;}        
+"TEAM CHEMISTRY" {return STRUCT;}         
+"HEAD COACH" {return SWITCH;}             
+"GAME PLAN" {return TEMPLATE;}            
+"PASS OUT OF THE DOUBLE TEAM" {return THROW;} 
+"ATTEMPTS A POST-UP" {return TRY;}       
+"ROLE ASSIGNMENT" {return TYPEDEF;}      
+"PLAYER TRADE" {return UNION;}           
+"ALL-STAR VOTE" {return UNSIGNED;}       
+"PISTONS" {return VOID;}       
+"FOUL TROUBLE" {return VOLATILE;}     
+"BUZZER BEATER" {return IF;}
+"OVERTIME" {return ELSE;}
 
-{DigNO}{Dig}+|0 {return NUM;}
-{Letra}({Dig}|{Letra})* {insere(yytext);}{return ID;} 
+{Dig}+ {return NUM;}                      /* Numbers */
+{Letra}({Letra}|{Dig})* {insere(yytext); return ID;}  /* Identifiers */
 
 %%
 
-/*Funcoes*/
+/* Main Function */
 int main(int argc, char **argv)
 {
-    int token, i = 1;
+    int token;
     yyin = fopen(argv[1], "r");
     token = yylex();
     while(token)
