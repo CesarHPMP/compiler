@@ -1,58 +1,45 @@
-#include <stdio.h>
 #include <string.h>
 #define MAX 1000
-
-int procura(char *);
-
-struct symbol
-{
-    char lexema[100];
-    int tam;
-    int type;
+struct symbol {
+	char lexema[50];
+	int tam;
+	int tipo;
 };
 
-int tam_tab = 0;
-struct symbol tabela[MAX];
+int tam_tab=0;
+struct symbol Tabela[MAX];
 
-int insere(char *lexema)
-{
-    int onde_existe, existe_na_tabela;
-    struct symbol aux;
-    onde_existe = procura(lexema);
-
-    if(onde_existe == -1)
-        existe_na_tabela = 0;
-    if(!existe_na_tabela)
-    {
-        strcpy(aux.lexema, lexema);
-        tabela[tam_tab] = aux;
-        return tam_tab++;
-    }
-    else 
-        return onde_existe;
+int procura(char *lexema) {
+    int i;	
+	for(i=0; i<tam_tab; i++) 
+	  if(strcmp(Tabela[i].lexema,lexema)==0)
+	     return i; 
+	return -1;     
 }
-
-int procura(char *lexema)
-{
-    int i = 0;
-    for(i = 0; i < tam_tab; i++)
-        if(!strcmp(tabela[i].lexema, lexema))
-            return i;
-    
-    return -1;
+int insere(char *lexema) {
+	int i,pos;
+	struct symbol aux;	
+	pos = procura(lexema);
+	if (pos != -1)
+		return pos;
+	strcpy(aux.lexema,lexema);
+	Tabela[tam_tab]=aux; 
+	return tam_tab++;	     
 }
-
 char lexema[50];
-char *get_lexema(int pos)
-{
-    strcpy(lexema, tabela[pos].lexema);
-    return lexema;
+char *obtemLexema(int pos) {
+	strcpy(lexema,Tabela[pos].lexema);
+	return lexema;
+}
+void imprime() {
+    int i;
+	printf("\nTABELA DE SIMBOLO\n");	
+	for(i=0; i<tam_tab; i++) 	
+	   printf("%d - %s\n",i,Tabela[i].lexema);
 }
 
-void imprime()
-{
-    int i;
-    printf("\nTAbela de simbolos\n");
-    for(i = 0; i < tam_tab; i++)
-        printf("%d - %s\n", i, tabela[i].lexema);
+void imprimeToken() {
+    int i = 0;
+
+
 }
