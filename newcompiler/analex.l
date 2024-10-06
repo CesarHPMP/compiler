@@ -13,53 +13,42 @@ letra [a-zA-Z]
 "/*"([^*]|\*[^/])*"*/"  {}
 "//".*  {}
 
+"\"[^\"]*\"" {return STRING;} 
+
 "+" {return UPLUS;}               
 "-" {return UMINUS;}              
-"*" {return UTIMES;}              
-"/" {return UDIVIDE;}             
+"*" {return MUL;}              
+"/" {return DIV;}             
 "=" {return ASSIGN_OP;}           
 "==" {return EQ;}                 
-"!=" {return NOTEQ;}              
+"!=" {return DIFF;}              
 ">=" {return GE;}                 
-"<=" {return LTEQ;}              
+"<=" {return LEQ;}              
 ">" {return GT;}                 
-"<" {return LT;}                      
+"<" {return LT;}          
+"""" {return STRING;}
+"(" {return LPAREN;}
+")" {return RPAREN;}
+"{" {return LBRACE;}
+"}"  {return RBRACE;}
+"[" {return LSQUARE;}
+"]" {return RSQUARE;}
+";" {return USEMICOLON;}
+"," {return COMMA;}
+"&&" {return AND;}
+"||" {return OR;}
+"!" {return NOT;}
 
+"air_ball" {return VOID;}
+"leint" {return INT;}
+"lefloat" {return FLOAT;}
+"shoots" {return IF;}
+"bounces_on_rim" {return ELSE;}
+"call_iso" {return FOR;}
+"call_pr"  {return WHILE_LOOP;}
 
-"RUN_IT" {return DO;}  
-"NO_PASS_TAKES_IT_TO_THE_RIM" {return WHILE_LOOP;}
-"BLOCKED_BY_JAMES" {return BREAK;} 
-"DECIDES_NOT_TO_CALL_TIMEOUT" {return CONTINUE;} 
-"AIRNESS" {return CHAR;}
-"BIG_FUNDAMENTAL" {return INTEGER;}
-"LEBRONTO" {return FLOATING;} 
-"BIG_DIESEL" {return STRING;}      
-"GOAT" {return CONST;}                     
-"FAST_BREAK" {return GOTO;}                
-"NUMBER_RETIRED" {return HEX_CONST;}       
-"NEW_ROOKIE" {return IMPORT;}              
-"SEVEN-FOOTER" {return LONG;}              
-"BENCH_WARMER" {return REGISTER;}          
-"NO_TRADE_CONTRACT" {return RESTRICT;} 
-"SHOT_CLOCK_EXPIRED" {return RETURN;}     
-"FLOATER_IN_THE_LANE" {return SHORT;}     
-"SHOOTING_FOUL" {return SIGNED;}          
-"SHOT_ATTEMPT" {return SIZEOF;}           
-"INJURED_RESERVE" {return STATIC;}        
-"TEAM_CHEMISTRY" {return STRUCT;}         
-"HEAD_COACH" {return SWITCH;}             
-"GAME_PLAN" {return TEMPLATE;}            
-"ROLE_ASSIGNMENT" {return TYPEDEF;}      
-"PLAYER_TRADE" {return UNION;}           
-"ALL-STAR_VOTE" {return UNSIGNED;}       
-"PISTONS" {return VOID;}       
-"FOUL_TROUBLE" {return VOLATILE;}     
-"BUZZER_BEATER" {return IF;}
-"BANG" {return ELSE;}
-"ITS_ALL_OVER"  {return RETURN;}
-
-{dig}+("."{dig}+)?	{ return NUM;}
-{letra}({letra}|{dig})*  {insere(yytext); return IDENTIFIER;}  
+("-")?{dig}+("."{dig}+)?	{return NUM;}
+{letra}({letra}|{dig})*  {insere(yytext); return ID;}  
 [ \t\r] {}
 \n	{ nline++; }
 .	{printf("erro lexico na linha %d - %s\n", nline, yytext); }
