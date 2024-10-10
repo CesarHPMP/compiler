@@ -7,13 +7,14 @@
 /* Regular Expressions */
 dig [0-9]
 letra [a-zA-Z]
+underscore ["_"]
 
 %%
 
 "/*"([^*]|\*[^/])*"*/"  {}
 "//".*  {}
 
-"\"[^\"]*\"" {return STRING;} 
+\"[^\"]*\" {return STRING;} 
 
 "+" {return UPLUS;}               
 "-" {return UMINUS;}              
@@ -45,10 +46,12 @@ letra [a-zA-Z]
 "shoots" {return IF;}
 "bounces_on_rim" {return ELSE;}
 "call_iso" {return FOR;}
-"call_pr"  {return WHILE_LOOP;}
+"call_pr" {return WHILE_LOOP;}
+"turnover" {return RETORNA;}
+"lechar" {return CHARACTER;}
 
 ("-")?{dig}+("."{dig}+)?	{return NUM;}
-{letra}({letra}|{dig})*  {insere(yytext); return ID;}  
+{letra}({letra}|{dig}|{underscore})*  {insere(yytext); return ID;}  
 [ \t\r] {}
 \n	{ nline++; }
 .	{printf("erro lexico na linha %d - %s\n", nline, yytext); }

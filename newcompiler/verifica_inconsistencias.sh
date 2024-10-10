@@ -11,32 +11,44 @@ then
 fi
 
 pasta_arquivos=$1
+
 n_outs=5
+
 
 for (( i=1; i<=${n_outs}; i++ ))
 do
     leo_out="$pasta_arquivos/saida${i}_.txt"
     student_out="$pasta_arquivos/saida${i}.txt"
 
-    # Run the program and generate the student output
     ./analex "${pasta_arquivos}/entrada${i}.c" > ${student_out}
 
-    # Extract relevant data for Leo's output
-    count_leo=$(grep -n "TABELA DE SIMBOLO" $leo_out | cut -d':' -f1)
-    line_number_leo=$(wc -l < $leo_out)
-    table_start_leo=$(expr $line_number_leo - $count_leo + 1)
-    symbol_table_leo=$(tail -n $table_start_leo $leo_out)
+    count=$(grep -n "TABELA DE SIMBOLO" < $leo_out | tr ":TABELA DE SIMBOLO" " ")
+    line_number=$(wc $leo_out -l | tr " ${leo_out} " " ")
+    table_start=$(expr $line_number - $count)
 
-    # Extract relevant data for student's output
-    count_student=$(grep -n "TABELA DE SIMBOLO" $student_out | cut -d':' -f1)
-    line_number_student=$(wc -l < $student_out)
-    table_start_student=$(expr $line_number_student - $count_student + 1)
-    symbol_table_student=$(tail -n $table_start_student $student_out)
+    symbol_table_leo=$(tail $leo_out -n $table_start)
+    line_number_leo=$line_number
 
-    # Compare both outputs
-    if [ "$symbol_table_student" == "$symbol_table_leo" ]
+
+
+    count=$(grep -n "TABELA DE SIMBOLOS" < $student_out | tr ":TABELA DE SIMBOLOS" " ")
+    line_number=$(wc $student_out -l | tr "${student_out}" " ")
+    table_start=$(expr $line_number - $count)
+
+    echo $student_out $line_number $count
+
+    symbol_table_student=$(tail $student_out -n $table_start)
+    line_number_student=$line_number
+
+
+    if [ $line_number_student == $line_number_leo ]
     then
-        echo "entrada${i}.c resultou idêntico"
+        if [ "$symbol_table_student" == "$symbol_table_leo" ]
+        then
+            echo "entrada${i}.c resultou idêntico"
+        else
+            echo "entrada${i}.c resultou diferente"
+        fi
     else
         echo "entrada${i}.c resultou diferente"
     fi

@@ -34,3 +34,5 @@
 #define OR 289
 #define NOT 290
 #define FOR 291
+#define RETORNA 292
+#define CHARACTER 293
