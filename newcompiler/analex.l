@@ -1,6 +1,7 @@
 %{
-    #include "tokens.h"
+    #include "parser.h"
     #include "tabsimb.h"
+	#include <stdlib.h>
     int nline = 1;
 %}
 
@@ -16,29 +17,28 @@ underscore ["_"]
 
 \"[^\"]*\" {return STRING;} 
 
-"+" {return UPLUS;}               
-"-" {return UMINUS;}              
-"*" {return MUL;}              
-"/" {return DIV;}             
-"=" {return ASSIGN_OP;}           
+"+" {return '+';}               
+"-" {return '-';}              
+"*" {return '*';}              
+"/" {return '/';}             
+"=" {return '=';}           
 "==" {return EQ;}                 
 "!=" {return DIFF;}              
 ">=" {return GE;}                 
 "<=" {return LEQ;}              
-">" {return GT;}                 
-"<" {return LT;}          
-"""" {return STRING;}
-"(" {return LPAREN;}
-")" {return RPAREN;}
-"{" {return LBRACE;}
-"}"  {return RBRACE;}
-"[" {return LSQUARE;}
-"]" {return RSQUARE;}
-";" {return USEMICOLON;}
-"," {return COMMA;}
+">" {return '>';}                 
+"<" {return '<';}          
+"(" {return '(';}
+")" {return ')';}
+"{" {return '{';}
+"}"  {return '}';}
+"[" {return '[';}
+"]" {return ']';}
+";" {return ';';}
+',' {return ',';}
 "&&" {return AND;}
 "||" {return OR;}
-"!" {return NOT;}
+"!" {return '!';}
 
 "air_ball" {return VOID;}
 "leint" {return INT;}
@@ -50,7 +50,10 @@ underscore ["_"]
 "turnover" {return RETORNA;}
 "lechar" {return CHARACTER;}
 
-("-")?{dig}+("."{dig}+)?	{return NUM;}
+("-")?{dig}+("."{dig}+)? {
+	yylval = atoi(yytext);
+	return NUM;
+	}
 {letra}({letra}|{dig}|{underscore})*  {insere(yytext); return ID;}  
 [ \t\r] {}
 \n	{ nline++; }
@@ -61,15 +64,7 @@ underscore ["_"]
 int yywrap() { return 1; }
 #endif
 
-/* Main Function */
-
-void main(int argc, char **argv) {
-int token,i=1;	
-	yyin = fopen(argv[1],"r");
-	token = yylex();
-	while(token) {
-		printf("%d) %d %s\n", i++, token, yytext);
-		token = yylex();
-	}
-	imprime();
+int yyerror(char *s)
+{
+	fprintf(stderr,"%s na linha %d\n", s, nline);
 }
