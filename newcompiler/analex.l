@@ -49,6 +49,7 @@ underscore ["_"]
 "call_pr" {return WHILE_LOOP;}
 "turnover" {return RETORNA;}
 "lechar" {return CHARACTER;}
+"shotclock_expired" {return ENDIF;}
 
 ("-")?{dig}+("."{dig}+)? {
 	yylval = atoi(yytext);
