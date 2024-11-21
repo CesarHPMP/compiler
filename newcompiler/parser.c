@@ -546,10 +546,10 @@ static const yytype_uint8 yyrline[] =
 {
        0,    42,    42,    47,    51,    51,    51,    51,    51,    55,
       56,    61,    64,    67,    70,    76,    80,    84,    90,    92,
-      94,    96,    98,   100,   104,   107,   110,   113,   116,   120,
-     121,   125,   126,   131,   135,   139,   140,   146,   147,   151,
-     152,   153,   154,   155,   156,   157,   161,   162,   168,   172,
-     173,   177,   181,   182,   186,   187
+      94,    96,    98,   100,   104,   107,   110,   111,   112,   116,
+     117,   121,   122,   127,   131,   135,   136,   142,   143,   147,
+     148,   149,   150,   151,   152,   153,   157,   158,   164,   168,
+     169,   173,   177,   178,   182,   183
 };
 #endif
 
@@ -1299,24 +1299,8 @@ yyreduce:
 #line 1300 "parser.c"
     break;
 
-  case 26: /* EXP: ID  */
-#line 110 "parser.y"
-         {
-        yyval = yylval;
-    }
-#line 1308 "parser.c"
-    break;
 
-  case 27: /* EXP: ID '[' NUM ']'  */
-#line 113 "parser.y"
-                  {
-        yyval = yylval;
-    }
-#line 1316 "parser.c"
-    break;
-
-
-#line 1320 "parser.c"
+#line 1304 "parser.c"
 
       default: break;
     }
@@ -1509,7 +1493,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 190 "parser.y"
+#line 186 "parser.y"
 
 
 void main(int argc, char **argv)

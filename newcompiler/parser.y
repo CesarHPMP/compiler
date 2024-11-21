@@ -107,12 +107,8 @@ EXP:
     | NUM {
         $$ = yylval;
     }
-    | ID {
-        $$ = yytext;
-    }
-    | ID'['NUM']' {
-        $$ = yytext;
-    }
+    | ID 
+    | ID'['NUM']'
     | FUNKCALL ';'
     ; 
 
