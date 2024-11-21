@@ -1,6 +1,5 @@
-#line 2 "analex.c"
 
-#line 4 "analex.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -528,9 +527,9 @@ char *yytext;
     #include "tabsimb.h"
 	#include <stdlib.h>
     int nline = 1;
-#line 532 "analex.c"
+#line 531 "lex.yy.c"
 /* Regular Expressions */
-#line 534 "analex.c"
+#line 533 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -750,7 +749,7 @@ YY_DECL
 #line 13 "analex.l"
 
 
-#line 754 "analex.c"
+#line 753 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -1018,7 +1017,7 @@ YY_RULE_SETUP
 #line 62 "analex.l"
 ECHO;
 	YY_BREAK
-#line 1022 "analex.c"
+#line 1021 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

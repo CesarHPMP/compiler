@@ -71,7 +71,7 @@
 
     #include "analex.c"
 
-#line 75 "parser.c"
+#line 75 "parser.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -94,7 +94,7 @@
 #  endif
 # endif
 
-#include "parser.h"
+#include "parser.tab.h"
 /* Symbol kind.  */
 enum yysymbol_kind_t
 {
@@ -1232,7 +1232,7 @@ yyreduce:
                 {
         yyval = yyvsp[-2] + yyvsp[0];
     }
-#line 1236 "parser.c"
+#line 1236 "parser.tab.c"
     break;
 
   case 12: /* EXP: EXP '-' EXP  */
@@ -1240,7 +1240,7 @@ yyreduce:
                   {
         yyval = yyvsp[-2] - yyvsp[0];
     }
-#line 1244 "parser.c"
+#line 1244 "parser.tab.c"
     break;
 
   case 13: /* EXP: EXP '*' EXP  */
@@ -1248,7 +1248,7 @@ yyreduce:
                   {
         yyval = yyvsp[-2] * yyvsp[0];
     }
-#line 1252 "parser.c"
+#line 1252 "parser.tab.c"
     break;
 
   case 14: /* EXP: EXP '/' EXP  */
@@ -1256,7 +1256,7 @@ yyreduce:
                   {
         yyval = yyvsp[-2] / yyvsp[0];
     }
-#line 1260 "parser.c"
+#line 1260 "parser.tab.c"
     break;
 
   case 15: /* EXP: EXP AND EXP  */
@@ -1264,7 +1264,7 @@ yyreduce:
                   {
         yyval = yyvsp[-2] * yyvsp[0];
     }
-#line 1268 "parser.c"
+#line 1268 "parser.tab.c"
     break;
 
   case 16: /* EXP: EXP OR EXP  */
@@ -1272,7 +1272,7 @@ yyreduce:
                  {
         yyval = yyvsp[-2] + yyvsp[0];
     }
-#line 1276 "parser.c"
+#line 1276 "parser.tab.c"
     break;
 
   case 17: /* EXP: '!' EXP  */
@@ -1280,7 +1280,7 @@ yyreduce:
              {
         printf("Não sei esse");
     }
-#line 1284 "parser.c"
+#line 1284 "parser.tab.c"
     break;
 
   case 24: /* EXP: '(' EXP ')'  */
@@ -1288,7 +1288,7 @@ yyreduce:
                   {
         yyval = yyvsp[-1];
     }
-#line 1292 "parser.c"
+#line 1292 "parser.tab.c"
     break;
 
   case 25: /* EXP: NUM  */
@@ -1296,27 +1296,27 @@ yyreduce:
           {
         yyval = yylval;
     }
-#line 1300 "parser.c"
+#line 1300 "parser.tab.c"
     break;
 
   case 26: /* EXP: ID  */
 #line 110 "parser.y"
          {
-        yyval = yylval;
+        yyval = yytext;
     }
-#line 1308 "parser.c"
+#line 1308 "parser.tab.c"
     break;
 
   case 27: /* EXP: ID '[' NUM ']'  */
 #line 113 "parser.y"
                   {
-        yyval = yylval;
+        yyval = yytext;
     }
-#line 1316 "parser.c"
+#line 1316 "parser.tab.c"
     break;
 
 
-#line 1320 "parser.c"
+#line 1320 "parser.tab.c"
 
       default: break;
     }

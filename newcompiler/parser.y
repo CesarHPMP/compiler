@@ -23,8 +23,15 @@
 %token CHARACTER 
 %token ENDIF
 
+%left OR
+%left AND
+%left '>' '<' GE LEQ EQ DIFF
 %left '+' '-'
 %left '*' '/'
+%right '!'
+%nonassoc ELSE
+
+
 %start Prog
 
 %%
@@ -37,8 +44,7 @@ Prog:
 
 /* UTILS */
 DECL:
-    TIPO LISTAID 
-    | TIPO ATR
+    TIPO LISTAIDS
     ;
 
 TIPO: 
@@ -46,10 +52,8 @@ TIPO:
     ;
     
 LISTAIDS:
-    ID ',' LISTAID
+    ID ',' LISTAIDS
     | ID 
-    | ATR ',' LISTAID
-    | ATR
     ;
 
 /* EXPRESSION STUFF */
@@ -77,7 +81,7 @@ EXP:
         $$ = $1 + $3;
     }
 
-    | !EXP {
+    | '!'EXP {
         printf("Não sei esse");
     } 
     
@@ -105,13 +109,15 @@ EXP:
     }
     | ID {
         $$ = yytext;
-      | ID'['NUM']'        $$ = yytext;
+    }
+    | ID'['NUM']' {
+        $$ = yytext;
+    }
     | FUNKCALL ';'
     ; 
 
 ATR:    
     ID '=' EXP 
-    
     | ID'['NUM']' '=' EXP
     ;
 
@@ -148,6 +154,12 @@ COMANDO:
     | FST 
     | IFST 
     | FUNKCALL ';'
+    | DECL ';'
+    ;
+
+ComandoComposto:
+    '{'LISTACOMANDO'}'
+    |COMANDO
     ;
 
 
@@ -157,7 +169,7 @@ FUNKCALL:
     ;
 
 FUNCSTM:
-    DECLFUNC'(' LISTADECLFUN ')' '{'LISTACOMANDO'}'
+    DECLFUNC'(' LISTADECLFUNC ')' '{'LISTACOMANDO'}'
     | DECLFUNC'(' ')' '{'LISTACOMANDO'}'
     ;
 

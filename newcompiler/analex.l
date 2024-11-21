@@ -1,5 +1,5 @@
 %{
-    #include "parser.h"
+    #include "parser.tab.h"
     #include "tabsimb.h"
 	#include <stdlib.h>
     int nline = 1;
