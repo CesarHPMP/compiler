@@ -70,8 +70,9 @@
 #line 1 "parser.y"
 
     #include "analex.c"
+    #include "tabsimb.h"
 
-#line 75 "parser.c"
+#line 76 "parser.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -544,12 +545,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    42,    42,    47,    51,    51,    51,    51,    51,    55,
-      56,    61,    64,    67,    70,    76,    80,    84,    90,    92,
-      94,    96,    98,   100,   104,   107,   110,   111,   112,   116,
-     117,   121,   122,   127,   131,   135,   136,   142,   143,   147,
-     148,   149,   150,   151,   152,   153,   157,   158,   164,   168,
-     169,   173,   177,   178,   182,   183
+       0,    54,    54,    59,    63,    63,    63,    63,    63,    67,
+      68,    73,    76,    79,    82,    88,    92,    96,   102,   104,
+     106,   108,   110,   112,   116,   119,   122,   125,   128,   132,
+     133,   137,   138,   143,   147,   151,   152,   158,   159,   163,
+     164,   165,   166,   167,   168,   169,   173,   174,   180,   186,
+     187,   191,   195,   196,   200,   201
 };
 #endif
 
@@ -1228,79 +1229,103 @@ yyreduce:
   switch (yyn)
     {
   case 11: /* EXP: EXP '+' EXP  */
-#line 61 "parser.y"
+#line 73 "parser.y"
                 {
-        yyval = yyvsp[-2] + yyvsp[0];
+        (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val);
     }
-#line 1236 "parser.c"
+#line 1237 "parser.c"
     break;
 
   case 12: /* EXP: EXP '-' EXP  */
-#line 64 "parser.y"
+#line 76 "parser.y"
                   {
-        yyval = yyvsp[-2] - yyvsp[0];
+        (yyval.val) = (yyvsp[-2].val) - (yyvsp[0].val);
     }
-#line 1244 "parser.c"
+#line 1245 "parser.c"
     break;
 
   case 13: /* EXP: EXP '*' EXP  */
-#line 67 "parser.y"
+#line 79 "parser.y"
                   {
-        yyval = yyvsp[-2] * yyvsp[0];
+        (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val);
     }
-#line 1252 "parser.c"
+#line 1253 "parser.c"
     break;
 
   case 14: /* EXP: EXP '/' EXP  */
-#line 70 "parser.y"
+#line 82 "parser.y"
                   {
-        yyval = yyvsp[-2] / yyvsp[0];
+        (yyval.val) = (yyvsp[-2].val) / (yyvsp[0].val);
     }
-#line 1260 "parser.c"
+#line 1261 "parser.c"
     break;
 
   case 15: /* EXP: EXP AND EXP  */
-#line 76 "parser.y"
+#line 88 "parser.y"
                   {
-        yyval = yyvsp[-2] * yyvsp[0];
+        (yyval.val) = (yyvsp[-2].val) * (yyvsp[0].val);
     }
-#line 1268 "parser.c"
+#line 1269 "parser.c"
     break;
 
   case 16: /* EXP: EXP OR EXP  */
-#line 80 "parser.y"
+#line 92 "parser.y"
                  {
-        yyval = yyvsp[-2] + yyvsp[0];
+        (yyval.val) = (yyvsp[-2].val) + (yyvsp[0].val);
     }
-#line 1276 "parser.c"
+#line 1277 "parser.c"
     break;
 
   case 17: /* EXP: '!' EXP  */
-#line 84 "parser.y"
+#line 96 "parser.y"
              {
         printf("Não sei esse");
     }
-#line 1284 "parser.c"
+#line 1285 "parser.c"
     break;
 
   case 24: /* EXP: '(' EXP ')'  */
-#line 104 "parser.y"
+#line 116 "parser.y"
                   {
-        yyval = yyvsp[-1];
+        (yyval.val) = (yyvsp[-1].val);
     }
-#line 1292 "parser.c"
+#line 1293 "parser.c"
     break;
 
   case 25: /* EXP: NUM  */
-#line 107 "parser.y"
+#line 119 "parser.y"
           {
-        yyval = yylval;
+        (yyval.val) = yylval;
     }
-#line 1300 "parser.c"
+#line 1301 "parser.c"
+    break;
+
+  case 26: /* EXP: ID  */
+#line 122 "parser.y"
+         {
+        insere(yylval); 
+    }
+#line 1309 "parser.c"
+    break;
+
+  case 27: /* EXP: ID '[' NUM ']'  */
+#line 125 "parser.y"
+                     {
+        (yyval.val) = Tabela[insere((yyvsp[-3].simbolo))].tipo;
+    }
+#line 1317 "parser.c"
+    break;
+
+  case 48: /* FUNKCALL: ID '(' LISTAEXP ')'  */
+#line 180 "parser.y"
+                       {
+        (yyval.val) = Tabela[insere((yyvsp[-3].simbolo))].tipo;
+    }
+#line 1325 "parser.c"
     break;
 
 
-#line 1304 "parser.c"
+#line 1329 "parser.c"
 
       default: break;
     }
@@ -1493,7 +1518,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 186 "parser.y"
+#line 204 "parser.y"
 
 
 void main(int argc, char **argv)

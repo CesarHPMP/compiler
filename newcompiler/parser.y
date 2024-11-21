@@ -1,9 +1,10 @@
 %{
     #include "analex.c"
+    #include "tabsimb.h"
 %}
 
-%token NUM      
-%token ID       
+%token <simbolo> NUM      
+%token <simbolo> ID       
 %token INT      
 %token GE       
 %token IF       
@@ -30,6 +31,17 @@
 %left '*' '/'
 %right '!'
 %nonassoc ELSE
+
+%union {
+    int val;
+    struct simb {
+        int pos;
+    }simbolo;
+}
+
+%type <val> EXP
+%type <val> FUNKCALL
+
 
 
 %start Prog
@@ -107,8 +119,12 @@ EXP:
     | NUM {
         $$ = yylval;
     }
-    | ID 
-    | ID'['NUM']'
+    | ID {
+        insere(yylval); 
+    }
+    | ID '[' NUM ']' {
+        $$ = Tabela[insere($1)].tipo;
+    }
     | FUNKCALL ';'
     ; 
 
@@ -161,7 +177,9 @@ ComandoComposto:
 
 /* FUNCIONS */
 FUNKCALL:
-    ID'(' LISTAEXP ')'
+    ID'(' LISTAEXP ')' {
+        $$ = Tabela[insere($1)].tipo;
+    }
     ;
 
 FUNCSTM:
