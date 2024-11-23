@@ -1,13 +1,15 @@
-main() {
-	leint aux,cont,a;
+int main() {
+	int aux,cont,a;
 	a = 10;
 	aux = a;
 	
-	shoots (1) 
+	if (1) 
 	  teste = 0;
+    endif
 	  
-	shoots ()
+	if (0)
 	  a = a + 1;
-	bounces_on_rim
-	  a = a - 1;    
+	else
+	  a = a - 1;
+	endif
 }
