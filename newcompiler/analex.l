@@ -12,11 +12,6 @@ underscore ["_"]
 
 %%
 
-"/*"([^*]|\*[^/])*"*/"  {}
-"//".*  {}
-
-\"[^\"]*\" {return STRING;} 
-
 "+" {return '+';}               
 "-" {return '-';}              
 "*" {return '*';}              
@@ -59,6 +54,8 @@ underscore ["_"]
 [ \t\r] {}
 \n	{ nline++; }
 .	{printf("erro lexico na linha %d - %s\n", nline, yytext); }
+
+
 %%
 
 #ifndef yywrap
