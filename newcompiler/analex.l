@@ -1,5 +1,5 @@
 %{
-    #include "parser.tab.h"
+    #include "sint.h"
     #include "tabsimb.h"
 	#include <stdlib.h>
     int nline = 1;
@@ -30,7 +30,7 @@ underscore ["_"]
 "[" {return '[';}
 "]" {return ']';}
 ";" {return ';';}
-',' {return ',';}
+"," {return ',';}
 "&&" {return AND;}
 "||" {return OR;}
 "!" {return '!';}
@@ -51,6 +51,10 @@ underscore ["_"]
 	return NUM;
 	}
 {letra}({letra}|{dig}|{underscore})*  {insere(yytext); return ID;}  
+"/*"([^*]|\*[^/])*"*/"  {}
+"//".*  {}
+
+\"[^\"]*\" {return STRING;} 
 [ \t\r] {}
 \n	{ nline++; }
 .	{printf("erro lexico na linha %d - %s\n", nline, yytext); }

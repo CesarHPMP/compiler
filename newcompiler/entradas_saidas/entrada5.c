@@ -1,24 +1,24 @@
-void boilWater() {
+air_ball boilWater() {
     printf("Step 1 Boil 2 cups of water.\n");
 }
 
-void addNoodles() {
+air_ball addNoodles() {
     printf("Step 2 Add noodles to the boiling water.\n");
 }
 
-void stirNoodles() {
+air_ball stirNoodles() {
     printf("Step 3 Stir the noodles gently for 3 minutes.\n");
 }
 
-void addSeasoning() {
+air_ball addSeasoning() {
     printf("Step 4 Add seasoning packet to the noodles. Stir well.\n");
 }
 
-void serve() {
+air_ball serve() {
     printf("Step 5 Turn off heat and serve hot.\n");
 }
 
-int main() {
+leint main() {
     printf("Instant Noodles Recipe\n");
     printf("Ingredients Instant noodles, water, seasoning packet.\n\n");
 
@@ -29,5 +29,5 @@ int main() {
     serve();
 
     printf("\nEnjoy your meal! (And don't burn yourself!)\n");
-    return 0;
+    turnover 0;
 }
