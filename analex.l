@@ -1,5 +1,5 @@
 %{
-    #include "sint.h"
+    #include "semantic.h"
     #include "tabsimb.h"
 	#include <stdlib.h>
     int nline = 1;
@@ -18,9 +18,9 @@ underscore ["_"]
 "/" {return '/';}             
 "=" {return '=';}           
 "==" {return EQ;}                 
-"!=" {return DIFF;}              
+"!=" {return NEQ;}              
 ">=" {return GE;}                 
-"<=" {return LEQ;}              
+"<=" {return LE;}              
 ">" {return '>';}                 
 "<" {return '<';}          
 "(" {return '(';}
@@ -39,9 +39,10 @@ underscore ["_"]
 "leint" {return INT;}
 "lefloat" {return FLOAT;}
 "shoots" {return IF;}
-"bounces_on_rim" {return ELSE;}
+"rebound" {return ELSE;}
+"coach_play" {return DO;}
 "call_iso" {return FOR;}
-"call_pr" {return WHILE_LOOP;}
+"call_pr" {return WHILE;}
 "turnover" {return RETORNA;}
 "lechar" {return CHARACTER;}
 "shotclock_expired" {return ENDIF;}
