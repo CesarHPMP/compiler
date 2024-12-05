@@ -1,6 +1,8 @@
 #include <string.h>
+#ifndef TIPOS
 #include "tipos.h"
-
+#endif
+#define TABSIMB
 #define MAX 1000
 struct symbol {
 	char nome[50];
