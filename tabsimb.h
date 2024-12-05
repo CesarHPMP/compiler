@@ -15,22 +15,25 @@ int proximo_elem=0;
 struct symbol Tabela[MAX];
 
 int procura(char *nome) {
-int i;	
+	int i;	
 	for(i=0; i<proximo_elem; i++) 
-	  if(strcmp(Tabela[i].nome,nome)==0)
-	     return i; 
+		if(strcmp(Tabela[i].nome,nome)==0)
+	    	return i; 
 	return -1;     
 }
 int insere(char *nome) {
-int i,pos;
-struct symbol aux;	
+	int i,pos;
+	struct symbol aux;	
 	pos = procura(nome);
+	
 	if (pos != -1)
 		return pos;
+		
 	strcpy(aux.nome,nome);
 	Tabela[proximo_elem]=aux;
 	Tabela[proximo_elem].tipo = -1;
 	Tabela[proximo_elem].tam_arg_list = 0;
+	
 	return proximo_elem++;	     
 }
 
@@ -51,8 +54,8 @@ char *obtemNome(int pos) {
 	return nome;
 }
 void imprime() {
-int i;
+	int i;
 	printf("\nTABELA DE SIMBOLOS\n");	
 	for(i=0; i<proximo_elem; i++) 	
-	   printf("%d - %s\n",i,Tabela[i].nome);
+		printf("%d - %s\n",i,Tabela[i].nome);
 }

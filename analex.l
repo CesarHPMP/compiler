@@ -70,4 +70,5 @@ int yywrap() { return 1; }
 int yyerror(char *s)
 {
 	fprintf(stderr,"%s na linha %d\n", s, nline);
+	exit();
 }
