@@ -1,8 +1,10 @@
+
 #include <string.h>
-#ifndef TIPOS
-#include "tipos.h"
+#ifndef ANALEX
+#include "analex.h"
+#define ANALEX
 #endif
-#define TABSIMB
+
 #define MAX 1000
 struct symbol {
 	char nome[50];
@@ -16,6 +18,27 @@ int offset=0;
 int proximo_elem=0;
 struct symbol Tabela[MAX];
 
+int get_tam_tipo(int tipo)
+{
+    switch (tipo)
+    {
+    case INT:
+        return 4;
+    
+    case FLOAT:
+        return 4;
+
+    case CHAR: 
+        return 1;
+
+    case VOID:
+        return 0;
+
+    default:
+        yyerror("Erro de tipos");
+    }
+}
+
 int procura(char *nome) {
 	int i;	
 	for(i=0; i<proximo_elem; i++) 
@@ -23,6 +46,7 @@ int procura(char *nome) {
 	    	return i; 
 	return -1;     
 }
+
 int insere(char *nome) {
 	int i,pos;
 	struct symbol aux;	
@@ -32,7 +56,7 @@ int insere(char *nome) {
 		return pos;
 		
 	strcpy(aux.nome,nome);
-	Tabela[proximo_elem]=aux;
+	Tabela[proximo_elem] = aux;
 	Tabela[proximo_elem].tipo = -1;
 	Tabela[proximo_elem].tam_arg_list = 0;
 	
@@ -55,9 +79,17 @@ char *obtemNome(int pos) {
 	strcpy(nome,Tabela[pos].nome);
 	return nome;
 }
+
+int getTipo(int pos) 
+{
+    return Tabela[pos].tipo;
+}
+
+
 void imprime() {
 	int i;
 	printf("\nTABELA DE SIMBOLOS\n");	
 	for(i=0; i<proximo_elem; i++) 	
 		printf("%d - %s\n",i,Tabela[i].nome);
 }
+

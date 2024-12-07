@@ -1,13 +1,12 @@
-#ifndef SEMANTIC
-#include "semantic.h"
-#endif
-#ifndef LISTA
-#include "listacodigo.h"
-#endif
+
 #ifndef TABSIMB
+#define TABSIMB 
 #include "tabsimb.h"
 #endif
-#define CODIGO
+#ifndef LISTA
+#define LISTA
+#include "listacodigo.h"
+#endif
 
 int temp=-1;
 int newTemp() {
@@ -34,22 +33,22 @@ void getName(int num, char *name)
 }
 
 /* Geração de código para criar uma função. Exemplo */
-void Funct(struct no* Funct, int Id, struct no Comandos) {
+void Funct(struct no* Funct, int Id, struct no Comandos) 
+{
 	create_cod(&Funct->code);
 	obtemNome(Id);
-	sprintf(instrucao,"%s:\n",nome);
-	insert_cod(&Funct->code,instrucao);
-	insert_cod(&Funct->code,Comandos.code);
-	if (strcmp(nome,"main")==0) {
+	sprintf(instrucao, "%s:\n", nome);
+	insert_cod(&Funct->code, instrucao);
+	insert_cod(&Funct->code, Comandos.code);
+	if (strcmp(nome,"main")==0) 
+    {
 		sprintf(instrucao,"\tli $v0,10\n"); //Define exit
 		insert_cod(&Funct->code,instrucao);
 		sprintf(instrucao,"\tsyscall\n\n"); //Call exit
 		insert_cod(&Funct->code,instrucao);					
-	}
-	else {
+	} else {
 		sprintf(instrucao,"\tjr $ra\n\n"); //Return to previous function
 		insert_cod(&Funct->code,instrucao);
-
 	}
 }
 
@@ -82,6 +81,7 @@ void Call_blank(struct no* Call) {
     sprintf(instrucao, "\tjal %s\n", nome);
     insert_cod(&Call->code, instrucao);
 }
+
 /* Geração de código para atribuições */
 void Atrib(struct no* atribuido, struct no exp)
 {
@@ -103,8 +103,9 @@ void Li(struct no *Exp, int num) {
     sprintf(instrucao,"\tli %s,%d\n",name_dest,num);
     insert_cod(&Exp->code,instrucao);
 }
+
 /* Geração de código para qualquer expressão aritmética referente parâmetros */
-void ExpAri(struct no *Exp, struct no Exp1, struct no Exp2, char op[4]) {
+void ExpAri(struct no *Exp, struct no Exp1, struct no Exp2, char *op) {
 	char name_reg1[5];
     char name_reg2[5];
     char name_temp[5];
@@ -115,7 +116,7 @@ void ExpAri(struct no *Exp, struct no Exp1, struct no Exp2, char op[4]) {
     getName(Exp1.place,name_reg1);
 	getName(Exp2.place,name_reg2);
 	getName(Exp->place,name_temp); 
-	sprintf(instrucao,"\t  %s,%s,%s\n", op, name_temp, name_reg1, name_reg2);
+	sprintf(instrucao,"\t%s  %s,%s,%s\n", op, name_temp, name_reg1, name_reg2);
 	insert_cod(&Exp->code,instrucao); 
 }
 
@@ -255,7 +256,7 @@ void DoWhile(struct no *DoWhile, struct no Body, struct no Exp) {
 }
 
 
-void Bgt(struct no *Exp, struct no Exp1, struct no Exp2, char branch[4]) 
+void Bgt(struct no *Exp, struct no Exp1, struct no Exp2, char *branch) 
 { 
 	char name_reg1[5];
 	char name_reg2[5];
@@ -279,7 +280,7 @@ void Bgt(struct no *Exp, struct no Exp1, struct no Exp2, char branch[4])
 	insert_cod(&Exp->code,instrucao);
 }
 
-void Explog(struct no *Exp, struct no Exp1, struct no Exp2, char log[4])
+void Explog(struct no *Exp, struct no Exp1, struct no Exp2, char *log)
 {
 	char name_reg1[5];
 	char name_reg2[5];
@@ -294,4 +295,29 @@ void Explog(struct no *Exp, struct no Exp1, struct no Exp2, char log[4])
 	getName(Exp->place,name_temp);
 	sprintf(instrucao,"\t%s %s,%s\n", log, name_reg1,name_reg2);
 	insert_cod(&Exp->code,instrucao);
+}
+
+void adiciona_funcao_tabela(char *nome, int tipo, struct ids *parametros) 
+{
+    int pos;
+
+    pos = procura(nome);
+
+    if (pos == -1) 
+    {
+        pos = insere(nome);
+    }
+
+    set_type(pos, tipo);
+    if (parametros != NULL) 
+    {
+        Tabela[pos].tam_arg_list = parametros->tam;
+
+        for (int i = 0; i < parametros->tam; i++) 
+        {
+            Tabela[pos].arg_list[i] = parametros->ids[i];
+        }
+    } else {
+        Tabela[pos].tam_arg_list = 0; 
+    }
 }

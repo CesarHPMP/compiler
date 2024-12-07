@@ -1,11 +1,16 @@
 %{
+    #ifndef SEMANTICA
     #include "semantic.h"
+    #define SEMANTICA
+    #endif
+    #ifndef TABSIMB
+    #define TABSIMB 
     #include "tabsimb.h"
+    #endif
 	#include <stdlib.h>
     int nline = 1;
 %}
 
-/* Regular Expressions */
 dig [0-9]
 letra [a-zA-Z]
 underscore ["_"]
@@ -44,11 +49,11 @@ underscore ["_"]
 "call_iso" {return FOR;}
 "call_pr" {return WHILE;}
 "turnover" {return RETORNA;}
-"lechar" {return CHARACTER;}
+"lechar" {return CHAR;}
 "shotclock_expired" {return ENDIF;}
 
 ("-")?{dig}+("."{dig}+)? {
-	yylval = atoi(yytext);
+	yylval.ival = atoi(yytext);
 	return NUM;
 	}
 {letra}({letra}|{dig}|{underscore})*  {insere(yytext); return ID;}  
@@ -70,5 +75,5 @@ int yywrap() { return 1; }
 int yyerror(char *s)
 {
 	fprintf(stderr,"%s na linha %d\n", s, nline);
-	exit();
+	exit(0);
 }

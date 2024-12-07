@@ -1,14 +1,11 @@
-#ifndef SEMANTIC
-#include "semantic.h"
+#ifndef TABSIMB
+#define TABSIMB 
+#include "tabsimb.h"
 #endif
-#ifndef STD
-#include "stdio.h"
+#ifndef SEMANTICA
+#include "semantic.c"
+#define SEMANTICA
 #endif
-#ifndef ANALEX
-#include "analex.c"
-#endif
-
-#define TIPOS
 
 int retorna_maior_tipo(int tipo1, int tipo2){
 	if(tipo1 == -1 || tipo2 == -1)

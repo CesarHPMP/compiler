@@ -15,7 +15,7 @@ lex -o analex.c analex.l
 yacc -o semantic.c semantic.y -d
 gcc -o compilador semantic.c -lfl
 
-pasta_arquivos="./entradas_saidas_semantica/"
+pasta_arquivos="/entradas_saidas_semantica"
 n_outs=8
 echo "---------------------------------------------------------------------------------------------------"
 echo "|                           Verificando análise semântica                                         |"
@@ -41,7 +41,7 @@ done
 echo "---------------------------------------------------------------------------------------------------"
 echo "|                           Verificando geração de código                                         |"
 echo "---------------------------------------------------------------------------------------------------"
-pasta_arquivos="./entradas_saidas_cod/"
+pasta_arquivos="/entradas_saidas_cod/"
 n_outs=4
 for (( i=1; i<=${n_outs}; i++ ))
 do

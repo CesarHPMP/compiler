@@ -8,7 +8,7 @@ void create_cod(char **codigo) {
 }
 // insere uma instrucao a uma lista de instrucoes ja existente
 void  insert_cod(char **codigo, char *instrucao) {
-	char *aux;
+	char *aux = (char *)malloc(sizeof(codigo));
 	aux = *codigo;
 	*codigo = (char *) malloc(strlen(*codigo)+strlen(instrucao)+2);
 	strcpy(*codigo,aux);
@@ -20,4 +20,3 @@ void print_cod(char *codigo) {
 	printf("%s",codigo);
 }
 /*******************************************************************/
-
