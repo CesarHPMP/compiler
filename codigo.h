@@ -91,7 +91,8 @@ void Atrib(struct no* atribuido, struct no exp)
 	getName(exp.place, source);
 	sprintf(instrucao,"\tmove %s, %s\n", dest, source);
 	insert_cod(&atribuido->code, instrucao);
-	insert_cod(&atribuido->code, exp.code);
+    if(exp.code != NULL)
+	    insert_cod(&atribuido->code, exp.code);
 }
 
 /* Geração de código para carregar constantes */

@@ -1,10 +1,10 @@
-int main() {
-	int a, b, z;
+leint main() {
+	leint a = 1, b, z;
 	b = 10;
 	a = 33 - b;
-	if(a < b)
+	shoots(a < b)
 		z = 5;
-	else
+	rebound
 		z = 0;
-	endif
+	air_ball
 }

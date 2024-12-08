@@ -900,7 +900,7 @@ YY_RULE_SETUP
 case 18:
 YY_RULE_SETUP
 #line 37 "analex.l"
-{return ';';}
+{return ';'; printf("Achou ;");}
 	YY_BREAK
 case 19:
 YY_RULE_SETUP

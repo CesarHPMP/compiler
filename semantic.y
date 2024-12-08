@@ -289,23 +289,52 @@ DoWhile:
 
 			
 Atribuicao : 
-	ID '[' NUM ']' '=' Exp {
-    	if (procura(obtemNome($1)) != -1)
-    		Atrib(&$$, $3);
-    	else
-    		yyerror("Erro Semântico");
+    ID '[' NUM ']' '=' Exp {
+        int pos = procura(obtemNome($1));  // Verifica se a variável existe
+        if (pos != -1) {
+            // Valida o tipo da variável e o tipo do índice
+            if (getTipo($1) != INT && getTipo($1) != FLOAT) {
+                yyerror("Erro Semântico: Tipo incompatível para atribuição com índice");
+            }
 
+            // Valida o índice: deve ser um número inteiro
+            if ($3.tipo != INT) {
+                yyerror("Erro Semântico: Índice deve ser inteiro");
+            }
+
+            // Valida o tipo da expressão
+            if (retorna_maior_tipo(getTipo($1), $6.tipo) == -1) {
+                yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
+            }
+
+            // Gera código para a atribuição com índice
+            Atrib(&$$, $3);
+        } else {
+            yyerror("Erro Semântico: Variável não declarada");
+        }
+
+        // Determina o tipo resultante da atribuição
         $$.tipo = retorna_maior_tipo(getTipo($1), $6.tipo);
-	} /* V tipo indice. S tipo, place, código. */
+    } /* V tipo indice. S tipo, place, código. */
     | ID '=' Exp {
-    	if (procura(obtemNome($1)) != -1)
-    		Atrib(&$$, $3);
-    	else
-    		yyerror("Erro Semântico");
+        printf("Chegou em atrib\n");
+        int tipoVar = getTipo($1);  // Obtém o tipo da variável
+        if (tipoVar != -1) {
+            // Verifica se o tipo da variável é compatível com a expressão
+            if (retorna_maior_tipo(tipoVar, $3.tipo) == -1) {
+                yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
+            } else {
+                Atrib(&$$, $3);  // Gera o código para a atribuição
+            }
+        } else {
+            yyerror("Erro Semântico: Variável não declarada");
+        }
 
-        $$.tipo = retorna_maior_tipo(getTipo($1), $3.tipo);
+        // Determina o tipo resultante da atribuição
+        $$.tipo = retorna_maior_tipo(tipoVar, $3.tipo);
     } /* S tipo, place, código. */
-	;
+    ;
+
 				
 Exp :
 	  Exp '+' Exp {
@@ -363,11 +392,9 @@ Exp :
 		$$.tipo = $2.tipo;
 	} /*  S tipo, cod*/
 	| NUM {
-		$$ = $1;
+        $$.tipo = NUM;
+        $$.place = yylval.ival;
 	} /* S tipo, código */
-	| FLOAT {
-		$$.tipo = FLOAT;
-	}
 	| ID '[' NUM ']' {}  /* V declaracao, indice. S tipo, codigo  */
 	| ID  {
         $$.tipo = getTipo($1);
@@ -383,7 +410,7 @@ Exp :
 	
 %%  
 int main(int argc, char **argv) {     
-    yydebug = 0;
+    yydebug = 1;
     yyin = fopen(argv[1],"r");
     yyparse();      
 } 

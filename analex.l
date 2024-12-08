@@ -34,7 +34,7 @@ underscore ["_"]
 "}"  {return '}';}
 "[" {return '[';}
 "]" {return ']';}
-";" {return ';';}
+";" {return ';'; printf("Achou ;");}
 "," {return ',';}
 "&&" {return AND;}
 "||" {return OR;}
@@ -56,7 +56,10 @@ underscore ["_"]
 	yylval.ival = atoi(yytext);
 	return NUM;
 	}
-{letra}({letra}|{dig}|{underscore})*  {insere(yytext); return ID;}  
+{letra}({letra}|{dig}|{underscore})*  {
+    insere(yytext); 
+    return ID;
+    }  
 "/*"([^*]|\*[^/])*"*/"  {}
 "//".*  {}
 
