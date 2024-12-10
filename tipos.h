@@ -8,52 +8,59 @@
 #endif
 
 int retorna_maior_tipo(int tipo1, int tipo2){
-	if(tipo1 == -1 || tipo2 == -1)
-	{
-		yyerror("Erro Semântico");
-	}
 
 	switch(tipo1)
 	{
 		case INT:
-			if(tipo2 != CHAR)
+			if(tipo2 != CHAR || tipo2 != -1)
 			{
 				if(tipo2 != INT)
 				{
 					if(tipo2 != FLOAT)
-						yyerror("Erro Semântico");
-					return FLOAT;
+                    {
+					    printf("tipo1 não compatível com tipo2: %d %d\n", tipo1, tipo2);
+                    	yyerror("Erro Semântico");
+                    }
+                    return FLOAT;
 				}
 				return INT;
 			}
 			return INT;
 		
 		case FLOAT:
-			if(tipo2 != CHAR)
+			if(tipo2 != CHAR || tipo2 != -1)
 			{
 				if(tipo2 != INT)
 				{
 					if(tipo2 != FLOAT)
+                    {
+                        printf("tipo1 não compatível com tipo2: %d %d\n", tipo1, tipo2);
 						yyerror("Erro Semântico");
-					return FLOAT;
+                    }
+                    return FLOAT;
 				}
 				return FLOAT;
 			}
 			return FLOAT;
 
 		case CHAR:
-			if(tipo2 != FLOAT)
+			if(tipo2 != FLOAT || tipo2 != -1)
 			{
 				if(tipo2 != INT)
 				{
 					if(tipo2 != CHAR)
+                    {
+                        printf("tipo1 não compatível com tipo2: %d %d\n", tipo1, tipo2);
 						yyerror("Erro Semântico");
-					return CHAR;
+                    }
+                    return CHAR;
 				}
 				return INT;
 			}
 			return FLOAT;
-			
+
+        case -1:
+            return tipo2;
 	}
 }
 

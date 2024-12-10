@@ -92,4 +92,3 @@ void imprime() {
 	for(i=0; i<proximo_elem; i++) 	
 		printf("%d - %s\n",i,Tabela[i].nome);
 }
-

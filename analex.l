@@ -52,12 +52,18 @@ underscore ["_"]
 "lechar" {return CHAR;}
 "shotclock_expired" {return ENDIF;}
 
+("-")?{dig}+ {
+    yylval.ival = atoi(yytext); 
+    return NUM;
+    }
+
 ("-")?{dig}+("."{dig}+)? {
-	yylval.ival = atoi(yytext);
+	yylval.ival = atof(yytext);
 	return NUM;
 	}
 {letra}({letra}|{dig}|{underscore})*  {
     insere(yytext); 
+    printf("INSERIDO : %s\n", yytext);
     return ID;
     }  
 "/*"([^*]|\*[^/])*"*/"  {}

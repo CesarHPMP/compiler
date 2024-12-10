@@ -1,5 +1,6 @@
 %{ 
 	/* Para simplificar a notação, S é para sintetizar. A atualizar. V verificar */
+    #include <string.h>
 	#ifndef  ANALEX
 	#include "analex.c"
 	#define ANALEX
@@ -57,7 +58,7 @@
 %type <val> Type TypeF
 %type <id_list> IDs ParamList ArgList
 %type <node> Atribuicao Exp Function Prog Statement Statement_Seq 
-%type <node> If While Compound_Stt DoWhile FunctionCall Decls Decl
+%type <node> If While Compound_Stt DoWhile FunctionCall Decl
 
 %right '='
 
@@ -92,13 +93,13 @@ Prog : Prog Function {
 	;	
 
 Function :
-    TypeF ID '(' ParamList ')' '{' Decls Statement_Seq '}' {
+    TypeF ID '(' ParamList ')' '{' Statement_Seq '}' {
         adiciona_funcao_tabela(obtemNome($2), $1, &$4);
         create_cod(&$$.code);
     }
-    | TypeF ID '(' ')' '{' Decls Statement_Seq '}' {
+    | TypeF ID '(' ')' '{'Statement_Seq '}' {
         adiciona_funcao_tabela(obtemNome($2), $1, NULL); 
-        Funct(&$$, $2, $7);                
+        Funct(&$$, $2, $6);                
     }
     ;
 	
@@ -165,32 +166,24 @@ ParamList:
         } /* S Lista de IDs. A Tabela*/
     ;
 
-		
-Decls:
-    Decl ';' Decls {
-        create_cod(&$$.code);
-        insert_cod(&$$.code, $1.code);
-        insert_cod(&$$.code, $3.code);
-    }
-    | Decl {
-        create_cod(&$$.code);
-        insert_cod(&$$.code, $1.code);
-    }
-    ;
-
 Decl:
     Type IDs {
         int tipo;
         create_cod(&$$.code);
         if ($2.code != NULL)
             insert_cod(&$$.code, $2.code);
-        for (int i = 0; i < $2.tam; i++) 
+        for (int i = $2.tam - 1; i != 0; i--) 
         {
             tipo = getTipo($2.ids[i]);
-            if(tipo != $1)
-                yyerror("Erro Semântico");
+            if(tipo != $1 && tipo != -1)
+            {
+                printf("O tipo %i de %s não é %i", tipo, obtemNome($2.ids[i]), $1);
+                yyerror("Erro Semântico Decl");
+            }
+            printf("%s %d;\n", obtemNome($2.ids[i]), $1);
             set_type($2.ids[i], $1);
         }
+        $2.tam = 0;
     } /* A tabela. */
     ;
 
@@ -254,11 +247,29 @@ Statement:
 	  Atribuicao ';' {
         procura(obtemNome($1.place));
         retorna_maior_tipo(Tabela[$1.place].tipo, $1.tipo);
+        create_cod(&$$.code);
+        insert_cod(&$$.code, $1.code);
     } /* V declaracao, tipos atribuicao. */
-	| If  /* S código. */
-	| While /* S código. */
-	| DoWhile /* S código. */
-	| FunctionCall ';'  /* S código. */
+	| If  {
+        create_cod(&$$.code);
+        insert_cod(&$$.code, $1.code);
+    }/* S código. */
+	| While {
+        create_cod(&$$.code);
+        insert_cod(&$$.code, $1.code);
+    } /* S código. */
+	| DoWhile {
+        create_cod(&$$.code);
+        insert_cod(&$$.code, $1.code);
+    }/* S código. */
+	| FunctionCall ';' {
+        create_cod(&$$.code);
+        insert_cod(&$$.code, $1.code);
+    }  /* S código. */
+    | Decl ';' {
+        create_cod(&$$.code);
+        insert_cod(&$$.code, $1.code);
+    }
 	;
 
 Compound_Stt :
@@ -291,47 +302,24 @@ DoWhile:
 Atribuicao : 
     ID '[' NUM ']' '=' Exp {
         int pos = procura(obtemNome($1));  // Verifica se a variável existe
-        if (pos != -1) {
-            // Valida o tipo da variável e o tipo do índice
-            if (getTipo($1) != INT && getTipo($1) != FLOAT) {
-                yyerror("Erro Semântico: Tipo incompatível para atribuição com índice");
-            }
-
-            // Valida o índice: deve ser um número inteiro
-            if ($3.tipo != INT) {
-                yyerror("Erro Semântico: Índice deve ser inteiro");
-            }
-
-            // Valida o tipo da expressão
-            if (retorna_maior_tipo(getTipo($1), $6.tipo) == -1) {
-                yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
-            }
-
-            // Gera código para a atribuição com índice
-            Atrib(&$$, $3);
-        } else {
-            yyerror("Erro Semântico: Variável não declarada");
+    
+        if (getTipo($3.tipo) != INT) {
+            yyerror("Erro Semântico: Tipo incompatível para atribuição com índice");
         }
 
-        // Determina o tipo resultante da atribuição
+        // Valida o tipo da expressão
+        if (retorna_maior_tipo(getTipo($1), $6.tipo) == -1) {
+            yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
+        }
+        
+        Atrib(&$$, $3);
+        
         $$.tipo = retorna_maior_tipo(getTipo($1), $6.tipo);
     } /* V tipo indice. S tipo, place, código. */
     | ID '=' Exp {
         printf("Chegou em atrib\n");
-        int tipoVar = getTipo($1);  // Obtém o tipo da variável
-        if (tipoVar != -1) {
-            // Verifica se o tipo da variável é compatível com a expressão
-            if (retorna_maior_tipo(tipoVar, $3.tipo) == -1) {
-                yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
-            } else {
-                Atrib(&$$, $3);  // Gera o código para a atribuição
-            }
-        } else {
-            yyerror("Erro Semântico: Variável não declarada");
-        }
-
-        // Determina o tipo resultante da atribuição
-        $$.tipo = retorna_maior_tipo(tipoVar, $3.tipo);
+        Atrib(&$$, $3);  // Gera o código para a atribuição
+        $$.tipo = retorna_maior_tipo(getTipo($1), $3.tipo);
     } /* S tipo, place, código. */
     ;
 
@@ -392,8 +380,13 @@ Exp :
 		$$.tipo = $2.tipo;
 	} /*  S tipo, cod*/
 	| NUM {
-        $$.tipo = NUM;
-        $$.place = yylval.ival;
+        if (strchr(yytext, '.') != NULL) 
+        {
+            $$.tipo = FLOAT;
+        } else {
+            $$.tipo = INT;
+        }
+        Li(&$$, yylval.ival);
 	} /* S tipo, código */
 	| ID '[' NUM ']' {}  /* V declaracao, indice. S tipo, codigo  */
 	| ID  {

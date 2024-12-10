@@ -988,47 +988,51 @@ YY_RULE_SETUP
 case 35:
 YY_RULE_SETUP
 #line 59 "analex.l"
-{insere(yytext); return ID;}  
+{
+    insere(yytext); 
+    printf("INSERIDO : %s\n", yytext);
+    return ID;
+    }  
 	YY_BREAK
 case 36:
 /* rule 36 can match eol */
 YY_RULE_SETUP
-#line 60 "analex.l"
+#line 64 "analex.l"
 {}
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 61 "analex.l"
+#line 65 "analex.l"
 {}
 	YY_BREAK
 case 38:
 /* rule 38 can match eol */
 YY_RULE_SETUP
-#line 63 "analex.l"
+#line 67 "analex.l"
 {return STRING;} 
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 64 "analex.l"
+#line 68 "analex.l"
 {}
 	YY_BREAK
 case 40:
 /* rule 40 can match eol */
 YY_RULE_SETUP
-#line 65 "analex.l"
+#line 69 "analex.l"
 { nline++; }
 	YY_BREAK
 case 41:
 YY_RULE_SETUP
-#line 66 "analex.l"
+#line 70 "analex.l"
 {printf("erro lexico na linha %d - %s\n", nline, yytext); }
 	YY_BREAK
 case 42:
 YY_RULE_SETUP
-#line 69 "analex.l"
+#line 73 "analex.l"
 ECHO;
 	YY_BREAK
-#line 1032 "analex.c"
+#line 1036 "analex.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2033,7 +2037,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 69 "analex.l"
+#line 73 "analex.l"
 
 
 #ifndef yywrap

@@ -70,6 +70,7 @@
 #line 1 "semantic.y"
  
 	/* Para simplificar a notação, S é para sintetizar. A atualizar. V verificar */
+    #include <string.h>
 	#ifndef  ANALEX
 	#include "analex.c"
 	#define ANALEX
@@ -83,7 +84,7 @@
     #define TIPOS
     #endif
 
-#line 87 "semantic.c"
+#line 88 "semantic.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -149,8 +150,8 @@ enum yysymbol_kind_t
   YYSYMBOL_35_ = 35,                       /* '{'  */
   YYSYMBOL_36_ = 36,                       /* '}'  */
   YYSYMBOL_37_ = 37,                       /* ','  */
-  YYSYMBOL_38_ = 38,                       /* ';'  */
-  YYSYMBOL_39_ = 39,                       /* ']'  */
+  YYSYMBOL_38_ = 38,                       /* ']'  */
+  YYSYMBOL_39_ = 39,                       /* ';'  */
   YYSYMBOL_YYACCEPT = 40,                  /* $accept  */
   YYSYMBOL_ProgL = 41,                     /* ProgL  */
   YYSYMBOL_Prog = 42,                      /* Prog  */
@@ -158,19 +159,18 @@ enum yysymbol_kind_t
   YYSYMBOL_FunctionCall = 44,              /* FunctionCall  */
   YYSYMBOL_ArgList = 45,                   /* ArgList  */
   YYSYMBOL_ParamList = 46,                 /* ParamList  */
-  YYSYMBOL_Decls = 47,                     /* Decls  */
-  YYSYMBOL_Decl = 48,                      /* Decl  */
-  YYSYMBOL_IDs = 49,                       /* IDs  */
-  YYSYMBOL_TypeF = 50,                     /* TypeF  */
-  YYSYMBOL_Type = 51,                      /* Type  */
-  YYSYMBOL_Statement_Seq = 52,             /* Statement_Seq  */
-  YYSYMBOL_Statement = 53,                 /* Statement  */
-  YYSYMBOL_Compound_Stt = 54,              /* Compound_Stt  */
-  YYSYMBOL_If = 55,                        /* If  */
-  YYSYMBOL_While = 56,                     /* While  */
-  YYSYMBOL_DoWhile = 57,                   /* DoWhile  */
-  YYSYMBOL_Atribuicao = 58,                /* Atribuicao  */
-  YYSYMBOL_Exp = 59                        /* Exp  */
+  YYSYMBOL_Decl = 47,                      /* Decl  */
+  YYSYMBOL_IDs = 48,                       /* IDs  */
+  YYSYMBOL_TypeF = 49,                     /* TypeF  */
+  YYSYMBOL_Type = 50,                      /* Type  */
+  YYSYMBOL_Statement_Seq = 51,             /* Statement_Seq  */
+  YYSYMBOL_Statement = 52,                 /* Statement  */
+  YYSYMBOL_Compound_Stt = 53,              /* Compound_Stt  */
+  YYSYMBOL_If = 54,                        /* If  */
+  YYSYMBOL_While = 55,                     /* While  */
+  YYSYMBOL_DoWhile = 56,                   /* DoWhile  */
+  YYSYMBOL_Atribuicao = 57,                /* Atribuicao  */
+  YYSYMBOL_Exp = 58                        /* Exp  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -287,7 +287,7 @@ typedef int yytype_uint16;
 
 
 /* Stored state numbers (used for stacks). */
-typedef yytype_uint8 yy_state_t;
+typedef yytype_int8 yy_state_t;
 
 /* State numbers in computations.  */
 typedef int yy_state_fast_t;
@@ -498,16 +498,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  10
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   238
+#define YYLAST   254
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  40
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  20
+#define YYNNTS  19
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  59
+#define YYNRULES  58
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  130
+#define YYNSTATES  127
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   278
@@ -529,11 +529,11 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,    31,     2,     2,
       32,    34,    29,    27,    37,    28,     2,    30,     2,     2,
-       2,     2,     2,     2,     2,     2,     2,     2,     2,    38,
+       2,     2,     2,     2,     2,     2,     2,     2,     2,    39,
       26,    24,    25,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,    33,     2,    39,     2,     2,     2,     2,     2,     2,
+       2,    33,     2,    38,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,    35,     2,    36,     2,     2,     2,     2,
@@ -558,12 +558,12 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    81,    81,    86,    91,    95,    99,   106,   115,   128,
-     139,   149,   158,   170,   175,   182,   199,   203,   210,   214,
-     217,   220,   230,   231,   235,   236,   237,   241,   246,   254,
-     258,   259,   260,   261,   265,   266,   270,   273,   279,   285,
-     292,   319,   340,   344,   348,   352,   356,   360,   364,   368,
-     372,   376,   380,   384,   388,   391,   394,   398,   399,   407
+       0,    82,    82,    87,    92,    96,   100,   107,   116,   129,
+     140,   150,   159,   170,   192,   196,   203,   207,   210,   213,
+     223,   224,   228,   229,   230,   234,   239,   247,   253,   257,
+     261,   265,   269,   276,   277,   281,   284,   290,   296,   303,
+     319,   328,   332,   336,   340,   344,   348,   352,   356,   360,
+     364,   368,   372,   376,   379,   382,   391,   392,   400
 };
 #endif
 
@@ -583,10 +583,10 @@ static const char *const yytname[] =
   "IF", "ELSE", "ENDIF", "CHAR", "INT", "FLOAT", "VOID", "OR", "AND",
   "NOT", "GE", "LE", "EQ", "NEQ", "DO", "STRING", "FOR", "RETORNA", "'='",
   "'>'", "'<'", "'+'", "'-'", "'*'", "'/'", "'%'", "'('", "'['", "')'",
-  "'{'", "'}'", "','", "';'", "']'", "$accept", "ProgL", "Prog",
-  "Function", "FunctionCall", "ArgList", "ParamList", "Decls", "Decl",
-  "IDs", "TypeF", "Type", "Statement_Seq", "Statement", "Compound_Stt",
-  "If", "While", "DoWhile", "Atribuicao", "Exp", YY_NULLPTR
+  "'{'", "'}'", "','", "']'", "';'", "$accept", "ProgL", "Prog",
+  "Function", "FunctionCall", "ArgList", "ParamList", "Decl", "IDs",
+  "TypeF", "Type", "Statement_Seq", "Statement", "Compound_Stt", "If",
+  "While", "DoWhile", "Atribuicao", "Exp", YY_NULLPTR
 };
 
 static const char *
@@ -596,7 +596,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-74)
+#define YYPACT_NINF (-66)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -610,19 +610,19 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-      96,   -74,   -74,   -74,   -74,    14,    96,   -74,    26,   -74,
-     -74,   -74,    19,    -1,   -32,    -3,    69,    51,    52,    51,
-     -74,     7,    57,    92,    51,    93,    31,    84,   103,    48,
-      71,   107,     7,   -74,   -74,   -74,    90,    51,    -7,   108,
-     -74,     7,   -74,    54,     3,   141,    54,    54,     7,   -74,
-     149,   -74,   -74,   -74,   -74,   -74,   143,   158,   111,   -74,
-     130,    54,   -74,    54,   161,   -74,   131,    63,   125,    85,
-     104,   137,   134,   144,    -4,   -74,   -74,   179,   -74,   123,
-      54,    54,    54,    54,    54,    54,    54,    54,    54,    54,
-      54,    54,   -74,    54,   157,    48,    48,   -74,    54,   157,
-     181,   146,   -74,   178,   193,    97,    97,   208,   208,    97,
-      97,    41,    41,   -74,   -74,   -74,    54,   -74,    77,   142,
-     154,   -74,   161,    48,   -74,   160,   157,   191,   -74,   -74
+      73,   -66,   -66,   -66,   -66,    30,    73,   -66,    28,   -66,
+     -66,   -66,    31,    25,    21,    24,    58,   213,    33,    62,
+     -66,   -14,    37,    60,     2,    54,    55,   103,    78,   213,
+     -66,   -66,   -66,    84,   213,   118,    49,    -1,   122,    49,
+      49,   213,   -66,   119,   -66,   -66,    -7,    89,   -66,   -66,
+     -66,   -66,    97,   -66,   -66,   108,    49,   -66,    49,   169,
+     -66,   109,    61,   104,    83,   102,   116,   112,   142,   156,
+     -66,   158,   -66,   121,    49,    49,    49,    49,    49,    49,
+      49,    49,    49,    49,    49,    49,   -66,    49,   138,     2,
+       2,   -66,    49,   125,     5,   -66,   126,   -66,   186,   209,
+      76,    76,   224,   224,    76,    76,    -2,    -2,   -66,   -66,
+     -66,    49,   -66,     8,   140,   138,   170,   -66,   169,     2,
+     -66,   133,   137,   168,   -66,   138,   -66
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -630,133 +630,137 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,    25,    24,    26,    22,     0,     2,     4,     0,    23,
+       0,    23,    22,    24,    20,     0,     2,     4,     0,    21,
        1,     3,     0,     0,     0,     0,     0,     0,     0,     0,
-      12,     0,    14,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,    28,    30,    31,    32,     0,     0,    20,    15,
-      21,     0,    11,     0,     0,     0,     0,     0,     0,    34,
-       0,    33,     6,    27,    29,    13,     0,     0,     0,    56,
-      58,     0,    59,     0,    41,     8,     0,    10,     0,     0,
-       0,     0,     0,     0,    16,    17,     5,     0,    54,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     7,     0,     0,     0,     0,    35,     0,    19,
-       0,     0,    55,    52,    53,    48,    49,    50,    51,    46,
-      47,    42,    43,    44,    45,     9,     0,    38,     0,     0,
-       0,    57,    40,     0,    36,     0,    18,     0,    39,    37
+      12,     0,     0,     0,     0,     0,     0,     0,     0,    26,
+      28,    29,    30,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,    33,     0,    31,    32,    18,    13,    19,     6,
+      25,    27,     0,    11,    55,    57,     0,    58,     0,    40,
+       8,     0,    10,     0,     0,     0,     0,     0,     0,     0,
+       5,     0,    53,     0,     0,     0,     0,     0,     0,     0,
+       0,     0,     0,     0,     0,     0,     7,     0,     0,     0,
+       0,    34,     0,     0,    14,    15,     0,    54,    51,    52,
+      47,    48,    49,    50,    45,    46,    41,    42,    43,    44,
+       9,     0,    37,     0,     0,    17,     0,    56,    39,     0,
+      35,     0,     0,     0,    38,    16,    36
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-     -74,   -74,   -74,   194,   -74,   109,   -74,    -9,   -74,   -74,
-     -74,    59,   -16,   -29,   -73,   -74,   -74,   -74,   -21,   -42
+     -66,   -66,   -66,   172,   -66,    92,   -66,   -66,   -66,   -66,
+     171,    26,   -24,   -65,   -66,   -66,   -66,   -18,   -35
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     5,     6,     7,    30,    66,    15,    21,    22,    39,
-       8,    23,    31,    32,    50,    33,    34,    35,    36,    67
+       0,     5,     6,     7,    25,    61,    15,    26,    47,     8,
+      27,    28,    29,    43,    30,    31,    32,    33,    62
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
    positive, shift that token.  If negative, reduce the rule whose
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
-static const yytype_int16 yytable[] =
+static const yytype_int8 yytable[] =
 {
-      49,    64,    40,    17,    69,    70,    59,    60,     1,     2,
-       3,    26,    27,    28,    10,    41,    53,    43,    61,    78,
-      43,    79,   117,   118,    62,    58,    56,    29,    55,   100,
-      12,    18,    71,    14,    19,    63,    75,    65,   103,   104,
-     105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
-     127,    13,    26,    27,    28,    43,   119,    59,    60,     9,
-       1,     2,     3,    44,    45,     9,    49,    49,    29,    61,
-      90,    91,    16,    20,   122,    62,    80,    81,    25,    82,
-      83,    84,    85,    48,   123,   124,    63,    24,    86,    87,
-      88,    89,    90,    91,    49,    37,    38,    42,    80,    81,
-      93,    82,    83,    84,    85,     1,     2,     3,     4,    51,
-      86,    87,    88,    89,    90,    91,    46,    80,    81,    95,
-      82,    83,    84,    85,    88,    89,    90,    91,    54,    86,
-      87,    88,    89,    90,    91,    47,    80,    81,    96,    82,
-      83,    84,    85,    52,    68,    57,    73,    76,    86,    87,
-      88,    89,    90,    91,    72,    80,    81,   102,    82,    83,
-      84,    85,    74,    77,    94,    92,    98,    86,    87,    88,
-      89,    90,    91,    97,    80,    81,   125,    82,    83,    84,
-      85,   116,   101,    99,   120,   121,    86,    87,    88,    89,
-      90,    91,    81,   126,    82,    83,    84,    85,   128,   129,
-      11,     0,   115,    86,    87,    88,    89,    90,    91,    82,
-      83,    84,    85,     0,     0,     0,     0,     0,    86,    87,
-      88,    89,    90,    91,    82,    83,    -1,    -1,     0,     0,
-       0,     0,     0,    86,    87,    88,    89,    90,    91
+      42,    59,    54,    55,    64,    65,    21,    22,    23,    48,
+      36,     1,     2,     3,    56,   119,   120,    36,    37,    38,
+      57,    72,    24,    73,   112,   113,    68,    84,    85,    36,
+      10,    58,    12,    60,     1,     2,     3,    41,   116,    98,
+      99,   100,   101,   102,   103,   104,   105,   106,   107,   108,
+     109,    95,    54,    55,   123,    50,    17,   114,    18,    14,
+      52,    19,    20,    13,    56,    42,    42,    66,    34,    39,
+      57,     1,     2,     3,    74,    75,   118,    76,    77,    78,
+      79,    58,     1,     2,     3,     4,    80,    81,    82,    83,
+      84,    85,    40,    44,    45,    42,    74,    75,    87,    76,
+      77,    78,    79,    82,    83,    84,    85,    46,    80,    81,
+      82,    83,    84,    85,    49,    74,    75,    89,    76,    77,
+      78,    79,    53,    51,    67,    63,    69,    80,    81,    82,
+      83,    84,    85,    70,    74,    75,    90,    76,    77,    78,
+      79,    71,    88,    86,    92,    93,    80,    81,    82,    83,
+      84,    85,    91,    74,    75,    97,    76,    77,    78,    79,
+      94,    96,   111,   115,   117,    80,    81,    82,    83,    84,
+      85,     9,   124,   122,   121,   125,   126,     9,    11,   110,
+       0,     0,    74,    75,    16,    76,    77,    78,    79,     0,
+      35,     0,     0,     0,    80,    81,    82,    83,    84,    85,
+      75,     0,    76,    77,    78,    79,     0,     0,     0,     0,
+       0,    80,    81,    82,    83,    84,    85,    21,    22,    23,
+       0,     0,     1,     2,     3,    76,    77,    78,    79,     0,
+       0,     0,     0,    24,    80,    81,    82,    83,    84,    85,
+      76,    77,    -1,    -1,     0,     0,     0,     0,     0,    80,
+      81,    82,    83,    84,    85
 };
 
 static const yytype_int8 yycheck[] =
 {
-      29,    43,    23,    35,    46,    47,     3,     4,     9,    10,
-      11,     4,     5,     6,     0,    24,    32,    24,    15,    61,
-      24,    63,    95,    96,    21,    41,    33,    20,    37,    33,
-       4,    34,    48,    34,    37,    32,    57,    34,    80,    81,
-      82,    83,    84,    85,    86,    87,    88,    89,    90,    91,
-     123,    32,     4,     5,     6,    24,    98,     3,     4,     0,
-       9,    10,    11,    32,    33,     6,    95,    96,    20,    15,
-      29,    30,    13,     4,   116,    21,    13,    14,    19,    16,
-      17,    18,    19,    35,     7,     8,    32,    35,    25,    26,
-      27,    28,    29,    30,   123,    38,     4,     4,    13,    14,
-      37,    16,    17,    18,    19,     9,    10,    11,    12,    38,
-      25,    26,    27,    28,    29,    30,    32,    13,    14,    34,
-      16,    17,    18,    19,    27,    28,    29,    30,    38,    25,
-      26,    27,    28,    29,    30,    32,    13,    14,    34,    16,
-      17,    18,    19,    36,     3,    37,     3,    36,    25,    26,
-      27,    28,    29,    30,     5,    13,    14,    34,    16,    17,
-      18,    19,     4,    33,    39,    34,    32,    25,    26,    27,
+      24,    36,     3,     4,    39,    40,     4,     5,     6,    27,
+      24,     9,    10,    11,    15,     7,     8,    24,    32,    33,
+      21,    56,    20,    58,    89,    90,    33,    29,    30,    24,
+       0,    32,     4,    34,     9,    10,    11,    35,    33,    74,
+      75,    76,    77,    78,    79,    80,    81,    82,    83,    84,
+      85,    69,     3,     4,   119,    29,    35,    92,    34,    34,
+      34,    37,     4,    32,    15,    89,    90,    41,    35,    32,
+      21,     9,    10,    11,    13,    14,   111,    16,    17,    18,
+      19,    32,     9,    10,    11,    12,    25,    26,    27,    28,
+      29,    30,    32,    39,    39,   119,    13,    14,    37,    16,
+      17,    18,    19,    27,    28,    29,    30,     4,    25,    26,
+      27,    28,    29,    30,    36,    13,    14,    34,    16,    17,
+      18,    19,     4,    39,     5,     3,    37,    25,    26,    27,
       28,    29,    30,    36,    13,    14,    34,    16,    17,    18,
-      19,    24,     3,    39,     3,    39,    25,    26,    27,    28,
-      29,    30,    14,    39,    16,    17,    18,    19,    38,     8,
-       6,    -1,    93,    25,    26,    27,    28,    29,    30,    16,
-      17,    18,    19,    -1,    -1,    -1,    -1,    -1,    25,    26,
-      27,    28,    29,    30,    16,    17,    18,    19,    -1,    -1,
-      -1,    -1,    -1,    25,    26,    27,    28,    29,    30
+      19,    33,    38,    34,    32,     3,    25,    26,    27,    28,
+      29,    30,    36,    13,    14,    34,    16,    17,    18,    19,
+       4,     3,    24,    38,    38,    25,    26,    27,    28,    29,
+      30,     0,    39,     3,    34,    38,     8,     6,     6,    87,
+      -1,    -1,    13,    14,    13,    16,    17,    18,    19,    -1,
+      19,    -1,    -1,    -1,    25,    26,    27,    28,    29,    30,
+      14,    -1,    16,    17,    18,    19,    -1,    -1,    -1,    -1,
+      -1,    25,    26,    27,    28,    29,    30,     4,     5,     6,
+      -1,    -1,     9,    10,    11,    16,    17,    18,    19,    -1,
+      -1,    -1,    -1,    20,    25,    26,    27,    28,    29,    30,
+      16,    17,    18,    19,    -1,    -1,    -1,    -1,    -1,    25,
+      26,    27,    28,    29,    30
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     9,    10,    11,    12,    41,    42,    43,    50,    51,
-       0,    43,     4,    32,    34,    46,    51,    35,    34,    37,
-       4,    47,    48,    51,    35,    51,     4,     5,     6,    20,
-      44,    52,    53,    55,    56,    57,    58,    38,     4,    49,
-      58,    47,     4,    24,    32,    33,    32,    32,    35,    53,
-      54,    38,    36,    52,    38,    47,    33,    37,    52,     3,
-       4,    15,    21,    32,    59,    34,    45,    59,     3,    59,
-      59,    52,     5,     3,     4,    58,    36,    33,    59,    59,
-      13,    14,    16,    17,    18,    19,    25,    26,    27,    28,
-      29,    30,    34,    37,    39,    34,    34,    36,    32,    39,
-      33,     3,    34,    59,    59,    59,    59,    59,    59,    59,
-      59,    59,    59,    59,    59,    45,    24,    54,    54,    59,
-       3,    39,    59,     7,     8,    34,    39,    54,    38,     8
+       0,     9,    10,    11,    12,    41,    42,    43,    49,    50,
+       0,    43,     4,    32,    34,    46,    50,    35,    34,    37,
+       4,     4,     5,     6,    20,    44,    47,    50,    51,    52,
+      54,    55,    56,    57,    35,    50,    24,    32,    33,    32,
+      32,    35,    52,    53,    39,    39,     4,    48,    57,    36,
+      51,    39,    51,     4,     3,     4,    15,    21,    32,    58,
+      34,    45,    58,     3,    58,    58,    51,     5,    33,    37,
+      36,    33,    58,    58,    13,    14,    16,    17,    18,    19,
+      25,    26,    27,    28,    29,    30,    34,    37,    38,    34,
+      34,    36,    32,     3,     4,    57,     3,    34,    58,    58,
+      58,    58,    58,    58,    58,    58,    58,    58,    58,    58,
+      45,    24,    53,    53,    58,    38,    33,    38,    58,     7,
+       8,    34,     3,    53,    39,    38,     8
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    40,    41,    42,    42,    43,    43,    44,    44,    45,
-      45,    46,    46,    47,    47,    48,    49,    49,    49,    49,
-      49,    49,    50,    50,    51,    51,    51,    52,    52,    53,
-      53,    53,    53,    53,    54,    54,    55,    55,    56,    57,
-      58,    58,    59,    59,    59,    59,    59,    59,    59,    59,
-      59,    59,    59,    59,    59,    59,    59,    59,    59,    59
+      45,    46,    46,    47,    48,    48,    48,    48,    48,    48,
+      49,    49,    50,    50,    50,    51,    51,    52,    52,    52,
+      52,    52,    52,    53,    53,    54,    54,    55,    56,    57,
+      57,    58,    58,    58,    58,    58,    58,    58,    58,    58,
+      58,    58,    58,    58,    58,    58,    58,    58,    58
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     9,     8,     4,     3,     3,
-       1,     4,     2,     3,     1,     2,     3,     3,     6,     4,
-       1,     1,     1,     1,     1,     1,     1,     2,     1,     2,
-       1,     1,     1,     2,     1,     3,     6,     8,     5,     7,
-       6,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     2,     3,     1,     4,     1,     1
+       0,     2,     1,     2,     1,     8,     7,     4,     3,     3,
+       1,     4,     2,     2,     3,     3,     6,     4,     1,     1,
+       1,     1,     1,     1,     1,     2,     1,     2,     1,     1,
+       1,     2,     2,     1,     3,     6,     8,     5,     7,     6,
+       3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
+       3,     3,     3,     2,     3,     1,     4,     1,     1
 };
 
 
@@ -1220,43 +1224,43 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* ProgL: Prog  */
-#line 81 "semantic.y"
+#line 82 "semantic.y"
              {
 		printf("%s",(yyvsp[0].node).code);
 	}
-#line 1228 "semantic.c"
+#line 1232 "semantic.c"
     break;
 
   case 3: /* Prog: Prog Function  */
-#line 86 "semantic.y"
+#line 87 "semantic.y"
                      {
 		create_cod(&(yyval.node).code); 
 		insert_cod(&(yyval.node).code,(yyvsp[-1].node).code); 
 		insert_cod(&(yyval.node).code,(yyvsp[0].node).code);
 	}
-#line 1238 "semantic.c"
+#line 1242 "semantic.c"
     break;
 
-  case 5: /* Function: TypeF ID '(' ParamList ')' '{' Decls Statement_Seq '}'  */
-#line 95 "semantic.y"
-                                                           {
-        adiciona_funcao_tabela(obtemNome((yyvsp[-7].val)), (yyvsp[-8].val), &(yyvsp[-5].id_list));
+  case 5: /* Function: TypeF ID '(' ParamList ')' '{' Statement_Seq '}'  */
+#line 96 "semantic.y"
+                                                     {
+        adiciona_funcao_tabela(obtemNome((yyvsp[-6].val)), (yyvsp[-7].val), &(yyvsp[-4].id_list));
         create_cod(&(yyval.node).code);
     }
-#line 1247 "semantic.c"
+#line 1251 "semantic.c"
     break;
 
-  case 6: /* Function: TypeF ID '(' ')' '{' Decls Statement_Seq '}'  */
-#line 99 "semantic.y"
-                                                   {
-        adiciona_funcao_tabela(obtemNome((yyvsp[-6].val)), (yyvsp[-7].val), NULL); 
-        Funct(&(yyval.node), (yyvsp[-6].val), (yyvsp[-1].node));                
+  case 6: /* Function: TypeF ID '(' ')' '{' Statement_Seq '}'  */
+#line 100 "semantic.y"
+                                            {
+        adiciona_funcao_tabela(obtemNome((yyvsp[-5].val)), (yyvsp[-6].val), NULL); 
+        Funct(&(yyval.node), (yyvsp[-5].val), (yyvsp[-1].node));                
     }
-#line 1256 "semantic.c"
+#line 1260 "semantic.c"
     break;
 
   case 7: /* FunctionCall: ID '(' ArgList ')'  */
-#line 106 "semantic.y"
+#line 107 "semantic.y"
                        {
         int funcPos = (yyvsp[-3].val); 
         if (funcPos == -1) {
@@ -1266,11 +1270,11 @@ yyreduce:
         }
         Call(&(yyval.node), funcPos, (yyvsp[-1].id_list));
     }
-#line 1270 "semantic.c"
+#line 1274 "semantic.c"
     break;
 
   case 8: /* FunctionCall: ID '(' ')'  */
-#line 115 "semantic.y"
+#line 116 "semantic.y"
                  {
         int funcPos = procura(obtemNome((yyvsp[-2].val)));
         if (funcPos == -1) {
@@ -1280,11 +1284,11 @@ yyreduce:
         }
         Call_blank(&(yyval.node));
     }
-#line 1284 "semantic.c"
+#line 1288 "semantic.c"
     break;
 
   case 9: /* ArgList: Exp ',' ArgList  */
-#line 128 "semantic.y"
+#line 129 "semantic.y"
                     {
         create_cod(&(yyval.id_list).code);
         (yyval.id_list).tam = (yyvsp[0].id_list).tam + 1; 
@@ -1296,22 +1300,22 @@ yyreduce:
         insert_cod(&(yyval.id_list).code, (yyvsp[-2].node).code);
         insert_cod(&(yyval.id_list).code, (yyvsp[0].id_list).code);
     }
-#line 1300 "semantic.c"
+#line 1304 "semantic.c"
     break;
 
   case 10: /* ArgList: Exp  */
-#line 139 "semantic.y"
+#line 140 "semantic.y"
           {
         create_cod(&(yyval.id_list).code);
         (yyval.id_list).tam = 1;
         (yyval.id_list).ids[0] = (yyvsp[0].node).place;
         insert_cod(&(yyval.id_list).code, (yyvsp[0].node).code);
     }
-#line 1311 "semantic.c"
+#line 1315 "semantic.c"
     break;
 
   case 11: /* ParamList: ParamList ',' Type ID  */
-#line 149 "semantic.y"
+#line 150 "semantic.y"
                           {
         (yyval.id_list).ids[(yyval.id_list).tam] = insere(obtemNome((yyvsp[0].val)));
         if(getTipo((yyvsp[0].val)) == -1)
@@ -1321,11 +1325,11 @@ yyreduce:
                 yyerror("Tipos de argumentos incompatíveis!");
         (yyval.id_list).tam++;
     }
-#line 1325 "semantic.c"
+#line 1329 "semantic.c"
     break;
 
   case 12: /* ParamList: Type ID  */
-#line 158 "semantic.y"
+#line 159 "semantic.y"
               {
         (yyval.id_list).ids[(yyval.id_list).tam] = insere(obtemNome((yyvsp[0].val)));
         if(getTipo((yyvsp[0].val)) == -1)
@@ -1334,57 +1338,43 @@ yyreduce:
             if(getTipo((yyvsp[0].val)) != (yyvsp[-1].val))
                 yyerror("Tipos de argumentos incompatíveis!");
         }
-#line 1338 "semantic.c"
+#line 1342 "semantic.c"
     break;
 
-  case 13: /* Decls: Decl ';' Decls  */
+  case 13: /* Decl: Type IDs  */
 #line 170 "semantic.y"
-                   {
-        create_cod(&(yyval.node).code);
-        insert_cod(&(yyval.node).code, (yyvsp[-2].node).code);
-        insert_cod(&(yyval.node).code, (yyvsp[0].node).code);
-    }
-#line 1348 "semantic.c"
-    break;
-
-  case 14: /* Decls: Decl  */
-#line 175 "semantic.y"
-           {
-        create_cod(&(yyval.node).code);
-        insert_cod(&(yyval.node).code, (yyvsp[0].node).code);
-    }
-#line 1357 "semantic.c"
-    break;
-
-  case 15: /* Decl: Type IDs  */
-#line 182 "semantic.y"
              {
         int tipo;
         create_cod(&(yyval.node).code);
         if ((yyvsp[0].id_list).code != NULL)
             insert_cod(&(yyval.node).code, (yyvsp[0].id_list).code);
-        for (int i = 0; i < (yyvsp[0].id_list).tam; i++) 
+        for (int i = (yyvsp[0].id_list).tam - 1; i != 0; i--) 
         {
             tipo = getTipo((yyvsp[0].id_list).ids[i]);
-            if(tipo != (yyvsp[-1].val))
-                yyerror("Erro Semântico");
+            if(tipo != (yyvsp[-1].val) && tipo != -1)
+            {
+                printf("O tipo %i de %s não é %i", tipo, obtemNome((yyvsp[0].id_list).ids[i]), (yyvsp[-1].val));
+                yyerror("Erro Semântico Decl");
+            }
+            printf("%s %d;\n", obtemNome((yyvsp[0].id_list).ids[i]), (yyvsp[-1].val));
             set_type((yyvsp[0].id_list).ids[i], (yyvsp[-1].val));
         }
+        (yyvsp[0].id_list).tam = 0;
     }
-#line 1375 "semantic.c"
+#line 1365 "semantic.c"
     break;
 
-  case 16: /* IDs: IDs ',' ID  */
-#line 199 "semantic.y"
+  case 14: /* IDs: IDs ',' ID  */
+#line 192 "semantic.y"
                {
         (yyval.id_list).ids[(yyval.id_list).tam] = procura(obtemNome((yyvsp[0].val)));
         (yyval.id_list).tam++;
     }
-#line 1384 "semantic.c"
+#line 1374 "semantic.c"
     break;
 
-  case 17: /* IDs: IDs ',' Atribuicao  */
-#line 203 "semantic.y"
+  case 15: /* IDs: IDs ',' Atribuicao  */
+#line 196 "semantic.y"
                          {
         int pos = procura(obtemNome((yyvsp[0].node).place));
         create_cod(&(yyval.id_list).code);
@@ -1392,336 +1382,365 @@ yyreduce:
         (yyval.id_list).ids[(yyval.id_list).tam] = pos;
         (yyval.id_list).tam++;
     }
-#line 1396 "semantic.c"
+#line 1386 "semantic.c"
     break;
 
-  case 18: /* IDs: IDs ',' ID '[' NUM ']'  */
-#line 210 "semantic.y"
+  case 16: /* IDs: IDs ',' ID '[' NUM ']'  */
+#line 203 "semantic.y"
                              {
         (yyval.id_list).ids[(yyval.id_list).tam] = procura(obtemNome((yyvsp[-3].val)));
         (yyval.id_list).tam++;
     }
-#line 1405 "semantic.c"
+#line 1395 "semantic.c"
     break;
 
-  case 19: /* IDs: ID '[' NUM ']'  */
-#line 214 "semantic.y"
+  case 17: /* IDs: ID '[' NUM ']'  */
+#line 207 "semantic.y"
                      {
         (yyval.id_list).ids[(yyval.id_list).tam] = procura(obtemNome((yyvsp[-3].val)));
     }
-#line 1413 "semantic.c"
+#line 1403 "semantic.c"
     break;
 
-  case 20: /* IDs: ID  */
-#line 217 "semantic.y"
+  case 18: /* IDs: ID  */
+#line 210 "semantic.y"
          {
         (yyval.id_list).ids[(yyval.id_list).tam] = procura(obtemNome((yyvsp[0].val)));
     }
-#line 1421 "semantic.c"
+#line 1411 "semantic.c"
     break;
 
-  case 21: /* IDs: Atribuicao  */
-#line 220 "semantic.y"
+  case 19: /* IDs: Atribuicao  */
+#line 213 "semantic.y"
                  {
         int pos = procura(obtemNome((yyvsp[0].node).place));
         create_cod(&(yyval.id_list).code);
         insert_cod(&(yyval.id_list).code, (yyvsp[0].node).code);
         (yyval.id_list).ids[(yyval.id_list).tam] = pos;
     }
-#line 1432 "semantic.c"
+#line 1422 "semantic.c"
     break;
 
-  case 22: /* TypeF: VOID  */
-#line 230 "semantic.y"
+  case 20: /* TypeF: VOID  */
+#line 223 "semantic.y"
                {(yyval.val) = VOID;}
-#line 1438 "semantic.c"
+#line 1428 "semantic.c"
     break;
 
-  case 23: /* TypeF: Type  */
-#line 231 "semantic.y"
+  case 21: /* TypeF: Type  */
+#line 224 "semantic.y"
                {(yyval.val) = (yyvsp[0].val);}
-#line 1444 "semantic.c"
+#line 1434 "semantic.c"
     break;
 
-  case 24: /* Type: INT  */
-#line 235 "semantic.y"
+  case 22: /* Type: INT  */
+#line 228 "semantic.y"
               {(yyval.val) = INT;}
-#line 1450 "semantic.c"
+#line 1440 "semantic.c"
     break;
 
-  case 25: /* Type: CHAR  */
-#line 236 "semantic.y"
+  case 23: /* Type: CHAR  */
+#line 229 "semantic.y"
                {(yyval.val) = CHAR;}
-#line 1456 "semantic.c"
+#line 1446 "semantic.c"
     break;
 
-  case 26: /* Type: FLOAT  */
-#line 237 "semantic.y"
+  case 24: /* Type: FLOAT  */
+#line 230 "semantic.y"
                 {(yyval.val) = FLOAT;}
-#line 1462 "semantic.c"
+#line 1452 "semantic.c"
     break;
 
-  case 27: /* Statement_Seq: Statement Statement_Seq  */
-#line 241 "semantic.y"
+  case 25: /* Statement_Seq: Statement Statement_Seq  */
+#line 234 "semantic.y"
                             {
         create_cod(&(yyval.node).code);
         insert_cod(&(yyval.node).code, (yyvsp[-1].node).code);
         insert_cod(&(yyval.node).code, (yyvsp[0].node).code);
     }
-#line 1472 "semantic.c"
+#line 1462 "semantic.c"
     break;
 
-  case 28: /* Statement_Seq: Statement  */
-#line 246 "semantic.y"
+  case 26: /* Statement_Seq: Statement  */
+#line 239 "semantic.y"
                 {
         create_cod(&(yyval.node).code);
         insert_cod(&(yyval.node).code, (yyvsp[0].node).code);
     }
-#line 1481 "semantic.c"
+#line 1471 "semantic.c"
     break;
 
-  case 29: /* Statement: Atribuicao ';'  */
-#line 254 "semantic.y"
+  case 27: /* Statement: Atribuicao ';'  */
+#line 247 "semantic.y"
                          {
         procura(obtemNome((yyvsp[-1].node).place));
         retorna_maior_tipo(Tabela[(yyvsp[-1].node).place].tipo, (yyvsp[-1].node).tipo);
+        create_cod(&(yyval.node).code);
+        insert_cod(&(yyval.node).code, (yyvsp[-1].node).code);
     }
-#line 1490 "semantic.c"
+#line 1482 "semantic.c"
     break;
 
-  case 35: /* Compound_Stt: '{' Statement_Seq '}'  */
-#line 266 "semantic.y"
+  case 28: /* Statement: If  */
+#line 253 "semantic.y"
+              {
+        create_cod(&(yyval.node).code);
+        insert_cod(&(yyval.node).code, (yyvsp[0].node).code);
+    }
+#line 1491 "semantic.c"
+    break;
+
+  case 29: /* Statement: While  */
+#line 257 "semantic.y"
+                {
+        create_cod(&(yyval.node).code);
+        insert_cod(&(yyval.node).code, (yyvsp[0].node).code);
+    }
+#line 1500 "semantic.c"
+    break;
+
+  case 30: /* Statement: DoWhile  */
+#line 261 "semantic.y"
+                  {
+        create_cod(&(yyval.node).code);
+        insert_cod(&(yyval.node).code, (yyvsp[0].node).code);
+    }
+#line 1509 "semantic.c"
+    break;
+
+  case 31: /* Statement: FunctionCall ';'  */
+#line 265 "semantic.y"
+                           {
+        create_cod(&(yyval.node).code);
+        insert_cod(&(yyval.node).code, (yyvsp[-1].node).code);
+    }
+#line 1518 "semantic.c"
+    break;
+
+  case 32: /* Statement: Decl ';'  */
+#line 269 "semantic.y"
+               {
+        create_cod(&(yyval.node).code);
+        insert_cod(&(yyval.node).code, (yyvsp[-1].node).code);
+    }
+#line 1527 "semantic.c"
+    break;
+
+  case 34: /* Compound_Stt: '{' Statement_Seq '}'  */
+#line 277 "semantic.y"
                                 {(yyval.node) = (yyvsp[-1].node);}
-#line 1496 "semantic.c"
+#line 1533 "semantic.c"
     break;
 
-  case 36: /* If: IF '(' Exp ')' Compound_Stt ENDIF  */
-#line 270 "semantic.y"
+  case 35: /* If: IF '(' Exp ')' Compound_Stt ENDIF  */
+#line 281 "semantic.y"
                                             { 
 		If(&(yyval.node), (yyvsp[-3].node),(yyvsp[-1].node));
 	}
-#line 1504 "semantic.c"
+#line 1541 "semantic.c"
     break;
 
-  case 37: /* If: IF '(' Exp ')' Compound_Stt ELSE Compound_Stt ENDIF  */
-#line 273 "semantic.y"
+  case 36: /* If: IF '(' Exp ')' Compound_Stt ELSE Compound_Stt ENDIF  */
+#line 284 "semantic.y"
                                                               {
 		IfElse(&(yyval.node), (yyvsp[-5].node), (yyvsp[-3].node), (yyvsp[-1].node));
 	}
-#line 1512 "semantic.c"
+#line 1549 "semantic.c"
     break;
 
-  case 38: /* While: WHILE '(' Exp ')' Compound_Stt  */
-#line 279 "semantic.y"
+  case 37: /* While: WHILE '(' Exp ')' Compound_Stt  */
+#line 290 "semantic.y"
                                    {
         While(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node));
     }
-#line 1520 "semantic.c"
+#line 1557 "semantic.c"
     break;
 
-  case 39: /* DoWhile: DO Compound_Stt WHILE '(' Exp ')' ';'  */
-#line 285 "semantic.y"
+  case 38: /* DoWhile: DO Compound_Stt WHILE '(' Exp ')' ';'  */
+#line 296 "semantic.y"
                                           {
         DoWhile(&(yyval.node), (yyvsp[-5].node), (yyvsp[-2].node));
     }
-#line 1528 "semantic.c"
+#line 1565 "semantic.c"
     break;
 
-  case 40: /* Atribuicao: ID '[' NUM ']' '=' Exp  */
-#line 292 "semantic.y"
+  case 39: /* Atribuicao: ID '[' NUM ']' '=' Exp  */
+#line 303 "semantic.y"
                            {
         int pos = procura(obtemNome((yyvsp[-5].val)));  // Verifica se a variável existe
-        if (pos != -1) {
-            // Valida o tipo da variável e o tipo do índice
-            if (getTipo((yyvsp[-5].val)) != INT && getTipo((yyvsp[-5].val)) != FLOAT) {
-                yyerror("Erro Semântico: Tipo incompatível para atribuição com índice");
-            }
-
-            // Valida o índice: deve ser um número inteiro
-            if ((yyvsp[-3].node).tipo != INT) {
-                yyerror("Erro Semântico: Índice deve ser inteiro");
-            }
-
-            // Valida o tipo da expressão
-            if (retorna_maior_tipo(getTipo((yyvsp[-5].val)), (yyvsp[0].node).tipo) == -1) {
-                yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
-            }
-
-            // Gera código para a atribuição com índice
-            Atrib(&(yyval.node), (yyvsp[-3].node));
-        } else {
-            yyerror("Erro Semântico: Variável não declarada");
+    
+        if (getTipo((yyvsp[-3].node).tipo) != INT) {
+            yyerror("Erro Semântico: Tipo incompatível para atribuição com índice");
         }
 
-        // Determina o tipo resultante da atribuição
+        // Valida o tipo da expressão
+        if (retorna_maior_tipo(getTipo((yyvsp[-5].val)), (yyvsp[0].node).tipo) == -1) {
+            yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
+        }
+        
+        Atrib(&(yyval.node), (yyvsp[-3].node));
+        
         (yyval.node).tipo = retorna_maior_tipo(getTipo((yyvsp[-5].val)), (yyvsp[0].node).tipo);
     }
-#line 1560 "semantic.c"
+#line 1586 "semantic.c"
     break;
 
-  case 41: /* Atribuicao: ID '=' Exp  */
+  case 40: /* Atribuicao: ID '=' Exp  */
 #line 319 "semantic.y"
                  {
         printf("Chegou em atrib\n");
-        int tipoVar = getTipo((yyvsp[-2].val));  // Obtém o tipo da variável
-        if (tipoVar != -1) {
-            // Verifica se o tipo da variável é compatível com a expressão
-            if (retorna_maior_tipo(tipoVar, (yyvsp[0].node).tipo) == -1) {
-                yyerror("Erro Semântico: Tipo da expressão incompatível com a variável");
-            } else {
-                Atrib(&(yyval.node), (yyvsp[0].node));  // Gera o código para a atribuição
-            }
-        } else {
-            yyerror("Erro Semântico: Variável não declarada");
-        }
-
-        // Determina o tipo resultante da atribuição
-        (yyval.node).tipo = retorna_maior_tipo(tipoVar, (yyvsp[0].node).tipo);
+        Atrib(&(yyval.node), (yyvsp[0].node));  // Gera o código para a atribuição
+        (yyval.node).tipo = retorna_maior_tipo(getTipo((yyvsp[-2].val)), (yyvsp[0].node).tipo);
     }
-#line 1582 "semantic.c"
+#line 1596 "semantic.c"
     break;
 
-  case 42: /* Exp: Exp '+' Exp  */
-#line 340 "semantic.y"
+  case 41: /* Exp: Exp '+' Exp  */
+#line 328 "semantic.y"
                       {
         (yyval.node).tipo = retorna_maior_tipo((yyvsp[-2].node).tipo, (yyvsp[0].node).tipo);
         ExpAri(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "add");
         }
-#line 1591 "semantic.c"
+#line 1605 "semantic.c"
     break;
 
-  case 43: /* Exp: Exp '-' Exp  */
-#line 344 "semantic.y"
+  case 42: /* Exp: Exp '-' Exp  */
+#line 332 "semantic.y"
                       {
         (yyval.node).tipo = retorna_maior_tipo((yyvsp[-2].node).tipo, (yyvsp[0].node).tipo);
         ExpAri(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "sub");
         }
-#line 1600 "semantic.c"
+#line 1614 "semantic.c"
     break;
 
-  case 44: /* Exp: Exp '*' Exp  */
-#line 348 "semantic.y"
+  case 43: /* Exp: Exp '*' Exp  */
+#line 336 "semantic.y"
                       {        
         (yyval.node).tipo = retorna_maior_tipo((yyvsp[-2].node).tipo, (yyvsp[0].node).tipo);
         ExpAri(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "mul");
         }
-#line 1609 "semantic.c"
+#line 1623 "semantic.c"
     break;
 
-  case 45: /* Exp: Exp '/' Exp  */
-#line 352 "semantic.y"
+  case 44: /* Exp: Exp '/' Exp  */
+#line 340 "semantic.y"
                       {
         (yyval.node).tipo = retorna_maior_tipo((yyvsp[-2].node).tipo, (yyvsp[0].node).tipo);
         ExpAri(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "div");
         }
-#line 1618 "semantic.c"
+#line 1632 "semantic.c"
     break;
 
-  case 46: /* Exp: Exp '>' Exp  */
+  case 45: /* Exp: Exp '>' Exp  */
+#line 344 "semantic.y"
+                      {
+		(yyval.node).tipo = INT;
+		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "bgt");
+		}
+#line 1641 "semantic.c"
+    break;
+
+  case 46: /* Exp: Exp '<' Exp  */
+#line 348 "semantic.y"
+                      {
+		(yyval.node).tipo = INT;
+		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "blt");
+		}
+#line 1650 "semantic.c"
+    break;
+
+  case 47: /* Exp: Exp GE Exp  */
+#line 352 "semantic.y"
+                      {
+		(yyval.node).tipo = INT;
+		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "blt");
+		}
+#line 1659 "semantic.c"
+    break;
+
+  case 48: /* Exp: Exp LE Exp  */
 #line 356 "semantic.y"
                       {
 		(yyval.node).tipo = INT;
 		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "bgt");
 		}
-#line 1627 "semantic.c"
+#line 1668 "semantic.c"
     break;
 
-  case 47: /* Exp: Exp '<' Exp  */
+  case 49: /* Exp: Exp EQ Exp  */
 #line 360 "semantic.y"
-                      {
-		(yyval.node).tipo = INT;
-		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "blt");
-		}
-#line 1636 "semantic.c"
-    break;
-
-  case 48: /* Exp: Exp GE Exp  */
-#line 364 "semantic.y"
-                      {
-		(yyval.node).tipo = INT;
-		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "blt");
-		}
-#line 1645 "semantic.c"
-    break;
-
-  case 49: /* Exp: Exp LE Exp  */
-#line 368 "semantic.y"
-                      {
-		(yyval.node).tipo = INT;
-		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "bgt");
-		}
-#line 1654 "semantic.c"
-    break;
-
-  case 50: /* Exp: Exp EQ Exp  */
-#line 372 "semantic.y"
                       {
 		(yyval.node).tipo = INT;
 		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "beq");
 		}
-#line 1663 "semantic.c"
+#line 1677 "semantic.c"
     break;
 
-  case 51: /* Exp: Exp NEQ Exp  */
-#line 376 "semantic.y"
+  case 50: /* Exp: Exp NEQ Exp  */
+#line 364 "semantic.y"
                       {
 		(yyval.node).tipo = INT;
 		Bgt(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "bnq");
 	}
-#line 1672 "semantic.c"
+#line 1686 "semantic.c"
     break;
 
-  case 52: /* Exp: Exp OR Exp  */
-#line 380 "semantic.y"
+  case 51: /* Exp: Exp OR Exp  */
+#line 368 "semantic.y"
                      {
 		(yyval.node).tipo = INT;
 		Explog(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "or");
 	}
-#line 1681 "semantic.c"
+#line 1695 "semantic.c"
     break;
 
-  case 53: /* Exp: Exp AND Exp  */
-#line 384 "semantic.y"
+  case 52: /* Exp: Exp AND Exp  */
+#line 372 "semantic.y"
                       {
 		(yyval.node).tipo = INT;
 		Explog(&(yyval.node), (yyvsp[-2].node), (yyvsp[0].node), "and");
 	}
-#line 1690 "semantic.c"
+#line 1704 "semantic.c"
     break;
 
-  case 54: /* Exp: NOT Exp  */
-#line 388 "semantic.y"
+  case 53: /* Exp: NOT Exp  */
+#line 376 "semantic.y"
                   {
 		(yyval.node).tipo = INT;
 	}
-#line 1698 "semantic.c"
+#line 1712 "semantic.c"
     break;
 
-  case 55: /* Exp: '(' Exp ')'  */
-#line 391 "semantic.y"
+  case 54: /* Exp: '(' Exp ')'  */
+#line 379 "semantic.y"
                       {
 		(yyval.node).tipo = (yyvsp[-1].node).tipo;
 	}
-#line 1706 "semantic.c"
+#line 1720 "semantic.c"
     break;
 
-  case 56: /* Exp: NUM  */
-#line 394 "semantic.y"
+  case 55: /* Exp: NUM  */
+#line 382 "semantic.y"
               {
-        (yyval.node).tipo = NUM;
-        (yyval.node).place = yylval.ival;
+        if (strchr(yytext, '.') != NULL) 
+        {
+            (yyval.node).tipo = FLOAT;
+        } else {
+            (yyval.node).tipo = INT;
+        }
+        Li(&(yyval.node), yylval.ival);
 	}
-#line 1715 "semantic.c"
+#line 1734 "semantic.c"
     break;
 
-  case 57: /* Exp: ID '[' NUM ']'  */
-#line 398 "semantic.y"
+  case 56: /* Exp: ID '[' NUM ']'  */
+#line 391 "semantic.y"
                          {}
-#line 1721 "semantic.c"
+#line 1740 "semantic.c"
     break;
 
-  case 58: /* Exp: ID  */
-#line 399 "semantic.y"
+  case 57: /* Exp: ID  */
+#line 392 "semantic.y"
               {
         (yyval.node).tipo = getTipo((yyvsp[0].val));
         if((yyval.node).tipo == -1)
@@ -1730,17 +1749,17 @@ yyreduce:
         }
 
     }
-#line 1734 "semantic.c"
+#line 1753 "semantic.c"
     break;
 
-  case 59: /* Exp: STRING  */
-#line 407 "semantic.y"
+  case 58: /* Exp: STRING  */
+#line 400 "semantic.y"
                  {}
-#line 1740 "semantic.c"
+#line 1759 "semantic.c"
     break;
 
 
-#line 1744 "semantic.c"
+#line 1763 "semantic.c"
 
       default: break;
     }
@@ -1933,7 +1952,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 411 "semantic.y"
+#line 404 "semantic.y"
   
 int main(int argc, char **argv) {     
     yydebug = 1;

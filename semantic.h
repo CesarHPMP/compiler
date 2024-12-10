@@ -109,10 +109,10 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 17 "semantic.y"
+#line 18 "semantic.y"
 
     int ival;   /* Para armazenar números inteiros */
-#line 21 "semantic.y"
+#line 22 "semantic.y"
 
 	struct no{
 		int place;
