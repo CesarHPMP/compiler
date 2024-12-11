@@ -1351,14 +1351,14 @@ yyreduce:
 
         for (int i = 0; i < (yyvsp[0].id_list).tam; i++)
          {
-            tipo = getTipo((yyvsp[0].id_list).ids[i]);
+            tipo = getTipo((yyvsp[0].id_list).ids[i+1]);
             if (tipo != (yyvsp[-1].val) && tipo != -1) 
             {
                 printf("O tipo %i de %s não é %i\n", tipo, obtemNome((yyvsp[0].id_list).ids[i]), (yyvsp[-1].val));
                 yyerror("Erro Semântico Decl");
             }
-            printf("Iteração %i, ID %s, Tipo %d;\n", i, obtemNome((yyvsp[0].id_list).ids[i]), (yyvsp[-1].val));
-            set_type((yyvsp[0].id_list).ids[i], (yyvsp[-1].val));  // Define o tipo corretamente
+            printf("Iteração %i, pos %i, ID %s, Tipo %d;\n", i, (yyvsp[0].id_list).ids[i+1], obtemNome((yyvsp[0].id_list).ids[i+1]), (yyvsp[-1].val));
+            set_type((yyvsp[0].id_list).ids[i+1], (yyvsp[-1].val));  // Define o tipo corretamente
             
         }
 

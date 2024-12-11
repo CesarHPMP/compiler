@@ -181,7 +181,7 @@ Decl:
                 printf("O tipo %i de %s não é %i\n", tipo, obtemNome($2.ids[i]), $1);
                 yyerror("Erro Semântico Decl");
             }
-            printf("Iteração %i, ID %s, Tipo %d;\n", i, obtemNome($2.ids[i]), $1);
+            printf("Iteração %i, pos %i, ID %s, Tipo %d;\n", i, $2.ids[i], obtemNome($2.ids[i]), $1);
             set_type($2.ids[i], $1);  // Define o tipo corretamente
             
         }
