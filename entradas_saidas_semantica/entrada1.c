@@ -1,15 +1,15 @@
-int main() {
-	int aux,cont,a, teste;
+leint main() {
+	leint aux,cont,a, teste;
 	a = 10 + 2.3;
 	aux = a;
 
-	if (1) 
+	shoots (1) 
 	  teste = 0;
-    endif
+    air_ball
 	  
-	if (0)
+	shoots (0)
 	  a = a + 1;
-	else
+	rebound
 	  a = a - 1;
-	endif
+	air_ball
 }

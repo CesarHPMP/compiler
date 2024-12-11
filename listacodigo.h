@@ -19,7 +19,6 @@ void  insert_cod(char **codigo, char *instrucao) {
 	*codigo = (char *) malloc(strlen(*codigo)+strlen(instrucao)+2);
 	strcpy(*codigo,aux);
 	strcat(*codigo,instrucao);
-    print_cod(*codigo);
 	free(aux);
 }
 /*******************************************************************/
