@@ -199,8 +199,8 @@ IDs:
             $$.ids[$$.tam] = $1.ids[$$.tam];
             printf("Transferindo %s para %s\n IDs, ID\n", obtemNome($$.ids[$$.tam]), obtemNome($1.ids[$$.tam]));
         }
-        $$.tam++;  // Increment the tam
         $$.ids[$$.tam] = procura(obtemNome($3));  // Add the new identifier
+        $$.tam++;  // Increment the tam
     }
     | IDs ',' Atribuicao {
         for ($$.tam = 0;$$.tam < $1.tam; $$.tam++) 
@@ -212,8 +212,8 @@ IDs:
         int pos = procura(obtemNome($3.place));
         create_cod(&$$.code);
         insert_cod(&$$.code, $3.code);
-        $$.tam++;  // Increment the tam
         $$.ids[$$.tam] = pos;
+        $$.tam++;  // Increment the tam
     }
     | IDs ',' ID '[' NUM ']' {
         if($5.tipo != INT)
@@ -223,15 +223,15 @@ IDs:
             $$.ids[$$.tam] = $1.ids[$$.tam];
             printf("Transferindo %s para %s\n Ids ID vec", obtemNome($$.ids[$$.tam]), obtemNome($1.ids[$$.tam]));
         }
-        $$.tam++;
         $$.ids[$$.tam] = $3;  // Add the new identifier with array
+        $$.tam++;
     }
     | ID '[' NUM ']' 
     {
         if($3.tipo != INT)
             yyerror("Erro Semântico, array com tipo diferente de int");
-        $$.tam++;
         $$.ids[$$.tam] = $1;  // Handle single array element
+        $$.tam++;
     }
     | ID 
     {
@@ -243,7 +243,6 @@ IDs:
         int pos = $1.place;
         create_cod(&$$.code);
         insert_cod(&$$.code, $1.code);
-        $$.tam++;
         $$.ids[$$.tam] = pos;  // Handle assignment
     }
     ;
@@ -385,11 +384,16 @@ Exp :
         ExpAri(&$$, $1, $3, "add");
         } /* S tipo, cod */
 	| Exp '-' Exp {
+        printf("Passo começo");
         create_cod(&$$.code);
+        printf("Passo antes if $1");
         if($1.code != NULL)
             insert_cod(&$$.code, $1.code);
+        printf("Passo antes if $3");
         if($3.code != NULL)
             insert_cod(&$$.code, $3.code);
+        printf("Passo pos if");
+        
         $$.tipo = retorna_maior_tipo($1.tipo, $3.tipo);
         ExpAri(&$$, $1, $3, "sub");
         } /* S tipo, cod */
@@ -537,7 +541,7 @@ Exp :
 	
 %%  
 int main(int argc, char **argv) {     
-    yydebug = 0;
+    yydebug = 1;
     yyin = fopen(argv[1],"r");
     yyparse();      
 } 
