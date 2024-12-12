@@ -88,8 +88,7 @@ void Atrib(struct no* atribuido, struct no exp)
 {
 	char dest[5], source[5];
 	create_cod(&atribuido->code);
-    if(exp.code != NULL)
-        insert_cod(&atribuido->code, exp.code);
+    insert_cod(&atribuido->code, exp.code);
 	getName(atribuido->place, dest);
 	getName(exp.place, source);
 	sprintf(instrucao,"\tmove %s,%s\n", dest, source);
@@ -105,6 +104,7 @@ void Li(struct no *Exp, int num) {
     getName(Exp->place,name_dest);
     sprintf(instrucao,"\tli %s,%d\n",name_dest,num);
     insert_cod(&Exp->code,instrucao);
+
 }
 
 /* Geração de código para qualquer expressão aritmética referente parâmetros */

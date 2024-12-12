@@ -211,15 +211,13 @@ Decl:
 
         for (int i = 0; i < $2.tam; i++)
          {
-            if(&Tabela[$2.ids[i]] != NULL)
-                tipo = getTipo($2.ids[i]);
+            tipo = getTipo($2.ids[i]);
             if (tipo != $1 && tipo != -1) 
             {
                 printf("O tipo %i de %s não é %i\n", tipo, obtemNome($2.ids[i]), $1);
                 yyerror("Erro Semântico Decl");
             }
             set_type($2.ids[i], $1);  // Define o tipo corretamente
-            
         }
     }
     ;
@@ -227,24 +225,23 @@ Decl:
 
 IDs: 
     IDs ',' ID {
-        for ($$.tam = 0; $$.tam < $1.tam; $$.tam++) 
+        $$.tam = $1.tam;
+        for (int i = 0; i < $1.tam; i++) 
         {
-            $$.ids[$$.tam] = $1.ids[$$.tam];
+            $$.ids[i] = $1.ids[i];
         }
-        $$.tam++;  // Increment the tam
         $$.ids[$$.tam] = $3;  // Add the new identifier
         $$.tam++;  // Increment the tam
     }
     | IDs ',' Atribuicao {
-        for ($$.tam = 0;$$.tam < $1.tam; $$.tam++) 
+        $$.tam = $1.tam;
+        for (int i = 0;i < $1.tam; i++) 
         {
-            $$.ids[$$.tam] = $1.ids[$$.tam];
+            $$.ids[i] = $1.ids[i];
         }
-
         int pos = $3.place;
         create_cod(&$$.code);
         insert_cod(&$$.code, $3.code);
-        $$.tam++;  // Increment the tam
         $$.ids[$$.tam] = pos;
         $$.tam++;  // Increment the tam
     }
@@ -253,11 +250,11 @@ IDs:
         {
             yyerror("Indices de vetor não inteiro");
         }
-        for ($$.tam = 0; $$.tam < $1.tam; $$.tam++) 
+        $$.tam = $1.tam;
+        for (int i = 0;i < $1.tam; i++) 
         {
-            $$.ids[$$.tam] = $1.ids[$$.tam];
+            $$.ids[i] = $1.ids[i];
         }
-        $$.tam++;
         $$.ids[$$.tam] = $3;  // Add the new identifier with array
         $$.tam++;  // Increment the tam
     }
@@ -267,20 +264,21 @@ IDs:
         {
             yyerror("Indices de vetor não inteiro");
         }
-        $$.ids[$$.tam] = $1;  // Handle single array element
+        $$.tam = 1;
+        $$.ids[0] = $1;  // Handle single array element
     }
     | ID 
     {
         $$.tam = 1;
-        $$.ids[$$.tam] = $1;  // Handle single ID
+        $$.ids[0] = $1;  // Handle single ID
     }
     | Atribuicao 
     {
         int pos = $1.place;
         create_cod(&$$.code);
         insert_cod(&$$.code, $1.code);
-        $$.tam++;
-        $$.ids[$$.tam] = pos;  // Handle assignment
+        $$.tam = 1;
+        $$.ids[0] = pos;  // Handle assignment
     }
     ;
 
@@ -352,7 +350,7 @@ Statement:
 	;
 
 Compound_Stt :
-	  Statement  /* S código. Exemplo resolvido */
+	  Statement {$$ = $1;}  /* S código. Exemplo resolvido */
 	| '{' Statement_Seq '}' {$$ = $2;}  /* S código. Exemplo resolvido */
 	;
 		
@@ -390,7 +388,7 @@ Atribuicao :
             yyerror("Indices de vetor não inteiro");
         }
         $$.place = $1;
-        Atrib(&$$, $3);
+        Atrib(&$$, $6);
         $$.tipo = $6.tipo;
     } /* V tipo indice. S tipo, place, código. */
     | ID '=' Exp 
@@ -457,6 +455,7 @@ Exp :
 		Explog(&$$, $1, $3, "and");
 	} /* S tipo, cod */
 	| NOT Exp {
+        create_cod(&$$.code);
 		$$.tipo = INT;
 	} /*  S tipo. Não precisa implementar código*/
 	| '(' Exp ')' {
@@ -464,15 +463,16 @@ Exp :
         if($2.code != NULL)
             insert_cod(&$$.code, $2.code);
 		$$.tipo = $2.tipo;
+        $$ = $2;
 	} /*  S tipo, cod*/
 	| NUM {
-        if (yy_tipo == FLOAT) 
+        if (yy_tipo == INT) 
         {
-            $$.tipo = FLOAT;
-            Li(&$$, yylval.fval);
-        } else {
             $$.tipo = INT;
             Li(&$$, yylval.ival);
+        } else {
+            $$.tipo = FLOAT;
+            Li(&$$, yylval.fval);
         }
 	} /* S tipo, código */
 	| ID '[' NUM ']' {
@@ -488,11 +488,10 @@ Exp :
         if($3.code != NULL)
             insert_cod(&$$.code, $3.code);
         $$.tipo = getTipo($1);
-        $$.place = newTemp();
     }  /* V declaracao, indice. S tipo, codigo  */
 	| ID  {
         int tipo = getTipo($1);
-        if(tipo == -1)
+        if(tipo == -1){
             yyerror("Uso de variável não declarada");
         }
         create_cod(&$$.code);

@@ -1,21 +1,21 @@
 soma:
-	add $t2,$t0,$t1
-	move $s3,$t2
+	add $t0,$s1,$s2
+	move $s3,$t0
 	jr $ra
 
 sub:
-	add $t5,$t3,$t4
-	move $s3,$t5
+	add $t1,$s1,$s2
+	move $s3,$t1
 	jr $ra
 
 main:
-	li $t6,10
-	move $s7,$t6
-	li $t7,33
-	sub $t9,$t7,$t8
-	move $s6,$t9
-	move $s1,$t11
-	move $s2,$t10
+	li $t2,10
+	move $s7,$t2
+	li $t3,33
+	sub $t4,$t3,$s7
+	move $s6,$t4
+	move $s1,$s7
+	move $s2,$s6
 	jal soma
 	li $v0,10
 	syscall
