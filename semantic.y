@@ -488,16 +488,14 @@ Exp :
         if($3.code != NULL)
             insert_cod(&$$.code, $3.code);
         $$.tipo = getTipo($1);
-        ExpID(&$$);
+        $$.place = newTemp();
     }  /* V declaracao, indice. S tipo, codigo  */
 	| ID  {
         int tipo = getTipo($1);
         if(tipo == -1)
-        {
             yyerror("Uso de variável não declarada");
         }
         create_cod(&$$.code);
-        ExpID(&$$);
         $$.tipo = tipo;
     } /* V declaracao. S tipo, codigo  */
 	| STRING {} /* Ignore, não precisa implementar  */

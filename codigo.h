@@ -326,10 +326,3 @@ void adiciona_funcao_tabela(char *nome, int tipo, struct ids *parametros)
         Tabela[pos].tam_arg_list = 0; 
     }
 }
-
-void ExpID(struct no *Exp)
-{
-    if (Exp->place == ) 
-        return;
-    Exp->place = newTemp();
-}

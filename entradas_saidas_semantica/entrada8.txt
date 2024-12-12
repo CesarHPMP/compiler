@@ -9,11 +9,11 @@ main:
 	move $s8,$s1
 	move $s8,$s2
 L2:
-	li $t4,1
-	blt $s6,$s8,L1
-	li $t4,0
+	li $t6,1
+	blt $t4,$t5,L1
+	li $t6,0
 L1:
-	beq $t4,0,L3
+	beq $t6,0,L3
 	move $s1,$s0
 	jal printf
 	j L2

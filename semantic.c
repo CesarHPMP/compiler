@@ -1828,7 +1828,7 @@ yyreduce:
         if((yyvsp[-1].node).code != NULL)
             insert_cod(&(yyval.node).code, (yyvsp[-1].node).code);
         (yyval.node).tipo = getTipo((yyvsp[-3].val));
-        ExpID(&(yyval.node));
+        (yyval.node).place = newTemp();
     }
 #line 1834 "semantic.c"
     break;
@@ -1842,7 +1842,7 @@ yyreduce:
             yyerror("Uso de variável não declarada");
         }
         create_cod(&(yyval.node).code);
-        ExpID(&(yyval.node));
+        (yyval.node).place = newTemp();
         (yyval.node).tipo = tipo;
     }
 #line 1849 "semantic.c"
