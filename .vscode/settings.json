@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "analex.c": "cpp"
+        "analex.c": "cpp",
+        "system_error": "cpp"
     }
 }

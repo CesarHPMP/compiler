@@ -117,6 +117,8 @@ void ExpAri(struct no *Exp, struct no Exp1, struct no Exp2, char *op) {
     insert_cod(&Exp->code,Exp1.code);
     insert_cod(&Exp->code,Exp2.code);
     getName(Exp1.place,name_reg1);
+    //printf("EXP PLACE É %i\n", Exp1.place);
+    //printf("EXP PLACE É %i\n", Exp2.place);
 	getName(Exp2.place,name_reg2);
 	getName(Exp->place,name_temp); 
 	sprintf(instrucao,"\t%s %s,%s,%s\n", op, name_temp, name_reg1, name_reg2);
@@ -323,4 +325,11 @@ void adiciona_funcao_tabela(char *nome, int tipo, struct ids *parametros)
     } else {
         Tabela[pos].tam_arg_list = 0; 
     }
+}
+
+void ExpID(struct no *Exp)
+{
+    if (Exp->place == ) 
+        return;
+    Exp->place = newTemp();
 }

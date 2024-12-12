@@ -313,11 +313,14 @@ Statement_Seq :
 		
 Statement: 
 	  Atribuicao ';' {
-        if($1.tipo == -1)
+        if(getTipo($1.place) == -1)
         {
-            yyerror("Erro Semântico, var não declarada");
+            yyerror("Uso de variável não declarada");
         }
-        retorna_maior_tipo(getTipo($1.place), $1.tipo);
+        if(tipos_inconsistentes_atrib(getTipo($1.place), $1.tipo) == -1)
+        {
+            yyerror("Tipos incompatíveis");
+        }
         create_cod(&$$.code);
         insert_cod(&$$.code, $1.code);
     } /* V declaracao, tipos atribuicao. */
@@ -378,17 +381,17 @@ DoWhile:
 Atribuicao : 
     ID '[' NUM ']' '=' Exp 
     {
-        if(yy_tipo != INT)
-        {
-            yyerror("Indices de vetor não inteiro");
-        }
         if(tipos_inconsistentes_atrib(getTipo($1), $6.tipo) == -1)
         {
             yyerror("Tipos incompatíveis");
         }
+        if(yy_tipo != INT)
+        {
+            yyerror("Indices de vetor não inteiro");
+        }
         $$.place = $1;
         Atrib(&$$, $3);
-        $$.tipo = retorna_maior_tipo(getTipo($1), $6.tipo);
+        $$.tipo = $6.tipo;
     } /* V tipo indice. S tipo, place, código. */
     | ID '=' Exp 
     {
@@ -485,15 +488,17 @@ Exp :
         if($3.code != NULL)
             insert_cod(&$$.code, $3.code);
         $$.tipo = getTipo($1);
+        ExpID(&$$);
     }  /* V declaracao, indice. S tipo, codigo  */
 	| ID  {
         int tipo = getTipo($1);
-        if(tipo != INT && tipo != FLOAT && tipo != CHAR && tipo != VOID)
+        if(tipo == -1)
         {
             yyerror("Uso de variável não declarada");
         }
         create_cod(&$$.code);
-        $$.tipo = getTipo($1);
+        ExpID(&$$);
+        $$.tipo = tipo;
     } /* V declaracao. S tipo, codigo  */
 	| STRING {} /* Ignore, não precisa implementar  */
 	;   
