@@ -16,33 +16,28 @@ int retorna_maior_tipo(int tipo1, int tipo2){
 			{
 				if(tipo2 != INT)
 				{
-					if(tipo2 != FLOAT)
-                    {
-					    printf("tipo1 não compatível com tipo2: %d %d\n", tipo1, tipo2);
-                    	yyerror("Erro Semântico");
-                    }
-                    return FLOAT;
+                    if(tipo2 == FLOAT)
+                        return FLOAT;
+                    yyerror("Tipos incompatíveis");
 				}
 				return INT;
 			}
 			return INT;
 		
 		case FLOAT:
-			if(tipo2 != CHAR || tipo2 != -1)
+			if(tipo2 != -1)
 			{
 				if(tipo2 != INT)
 				{
 					if(tipo2 != FLOAT)
                     {
-                        printf("tipo1 não compatível com tipo2: %d %d\n", tipo1, tipo2);
-						yyerror("Erro Semântico");
+                        yyerror("Tipos incompatíveis");
                     }
                     return FLOAT;
 				}
 				return FLOAT;
 			}
-			return FLOAT;
-
+            return FLOAT;
 		case CHAR:
 			if(tipo2 != FLOAT || tipo2 != -1)
 			{
@@ -50,8 +45,7 @@ int retorna_maior_tipo(int tipo1, int tipo2){
 				{
 					if(tipo2 != CHAR)
                     {
-                        printf("tipo1 não compatível com tipo2: %d %d\n", tipo1, tipo2);
-						yyerror("Erro Semântico");
+                    	yyerror("Tipos incompatíveis");
                     }
                     return CHAR;
 				}
@@ -64,8 +58,14 @@ int retorna_maior_tipo(int tipo1, int tipo2){
 	}
 }
 
-int tipos_inconsistentes_atrib(int id, int tipo){
-    struct symbol aux = Tabela[id];
-	int tipof = retorna_maior_tipo(tipo, aux.tipo);
-	return tipof;
+int tipos_inconsistentes_atrib(int tipo_destino, int tipo_origem){
+    if (tipo_origem == -1 || tipo_destino == -1)
+        return 0;
+    if (tipo_destino == tipo_origem)
+        return 0; 
+    if (tipo_destino == FLOAT && tipo_origem == INT)
+        return 0; 
+    if (tipo_destino == INT && tipo_origem == CHAR)
+        return 0; 
+    return -1;
 }

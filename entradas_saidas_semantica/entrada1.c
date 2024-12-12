@@ -5,11 +5,11 @@ leint main() {
 
 	shoots (1) 
 	  teste = 0;
-    air_ball
+    shotclock_expired
 	  
 	shoots (0)
 	  a = a + 1;
 	rebound
 	  a = a - 1;
-	air_ball
+	shotclock_expired
 }

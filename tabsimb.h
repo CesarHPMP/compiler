@@ -16,7 +16,7 @@ struct symbol {
 };
 int offset=0;
 int proximo_elem=0;
-struct symbol Tabela[MAX];
+struct symbol Tabela[MAX] = {0};
 
 int get_tam_tipo(int tipo)
 {
@@ -67,7 +67,7 @@ int set_type(int pos, int tipo){
 	if(pos >= proximo_elem)
 		return -1;
 	Tabela[pos].tipo = tipo;
-	printf("Pos %d tipo %d\n",pos,tipo);
+	//printf("Pos %d, var %s, tipo %d\n", pos, Tabela[pos].nome, tipo);
 	Tabela[pos].tam = get_tam_tipo(tipo);
 	offset+=Tabela[pos].tam;
 	return 1;
@@ -82,6 +82,8 @@ char *obtemNome(int pos) {
 
 int getTipo(int pos) 
 {
+    if(pos > proximo_elem)
+        return -1;
     return Tabela[pos].tipo;
 }
 

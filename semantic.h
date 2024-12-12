@@ -39,7 +39,7 @@
 # define YY_YY_SEMANTIC_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 1
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -109,10 +109,12 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 18 "semantic.y"
+#line 23 "semantic.y"
 
     int ival;   /* Para armazenar números inteiros */
-#line 22 "semantic.y"
+    float fval; /* Para armazenar números reais */
+    
+#line 28 "semantic.y"
 
 	struct no{
 		int place;
@@ -126,7 +128,7 @@ union YYSTYPE
 		char *code;
 	} id_list;
 
-#line 130 "semantic.h"
+#line 132 "semantic.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

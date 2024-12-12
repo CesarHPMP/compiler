@@ -60,6 +60,7 @@ void adiciona_argumentos(char **code, int id, struct ids Args){
 	for(int i = 0; i<simbolo.tam_arg_list;i++)
 	{
 		getName(simbolo.arg_list[i], name_param);
+        //printf("\tO nome é %s e lugar é %i\n", Tabela[simbolo.arg_list[i]].nome, simbolo.arg_list[i]);
 		getName(Args.ids[i], name_arg);
 		sprintf(instrucao,"\tmove %s,%s\n",name_param,name_arg);
 		insert_cod(code,instrucao);
@@ -71,7 +72,7 @@ void Call(struct no* Call, int Id, struct ids Args) {
     // Adiciona os argumentos para a chamada
     adiciona_argumentos(&Call->code, Id, Args);
 
-    sprintf(instrucao, "\tjal %s\n", nome);  
+    sprintf(instrucao, "\tjal %s\n", obtemNome(Id));  
     insert_cod(&Call->code, instrucao);
 }
 
@@ -87,12 +88,13 @@ void Atrib(struct no* atribuido, struct no exp)
 {
 	char dest[5], source[5];
 	create_cod(&atribuido->code);
+    if(exp.code != NULL)
+        insert_cod(&atribuido->code, exp.code);
 	getName(atribuido->place, dest);
 	getName(exp.place, source);
-	sprintf(instrucao,"\tmove %s, %s\n", dest, source);
+	sprintf(instrucao,"\tmove %s,%s\n", dest, source);
 	insert_cod(&atribuido->code, instrucao);
-    if(exp.code != NULL)
-	    insert_cod(&atribuido->code, exp.code);
+    
 }
 
 /* Geração de código para carregar constantes */
@@ -117,7 +119,7 @@ void ExpAri(struct no *Exp, struct no Exp1, struct no Exp2, char *op) {
     getName(Exp1.place,name_reg1);
 	getName(Exp2.place,name_reg2);
 	getName(Exp->place,name_temp); 
-	sprintf(instrucao,"\t%s  %s,%s,%s\n", op, name_temp, name_reg1, name_reg2);
+	sprintf(instrucao,"\t%s %s,%s,%s\n", op, name_temp, name_reg1, name_reg2);
 	insert_cod(&Exp->code,instrucao); 
 }
 
@@ -134,7 +136,7 @@ void If(struct no *If, struct no Exp, struct no Body)
     
     getName(Exp.place, name_cond);
     
-    sprintf(instrucao, "\tbeq %s, $zero, %s\n", name_cond, label_end);
+    sprintf(instrucao, "\tbeq %s,0,%s\n", name_cond, label_end);
     insert_cod(&If->code, instrucao);
 
     insert_cod(&If->code, Body.code);
@@ -162,7 +164,7 @@ void IfElse(struct no *IfElse, struct no Exp, struct no BodyIf, struct no BodyEl
     getName(Exp.place, name_cond);
 
     // Salta para o bloco `else` se a condição for falsa
-    sprintf(instrucao, "\tbeq %s, $zero, %s\n", name_cond, label_else);
+    sprintf(instrucao, "\tbeq %s,0,%s\n", name_cond, label_else);
     insert_cod(&IfElse->code, instrucao);
 
     // Código do bloco `if`
@@ -205,7 +207,7 @@ void While(struct no *While, struct no Exp, struct no Body) {
     getName(Exp.place, name_cond);
 
     // Instrução de salto para o final se a condição for falsa
-    sprintf(instrucao, "\tbeq %s, $zero, %s\n", name_cond, label_end);
+    sprintf(instrucao, "\tbeq %s,0,%s\n", name_cond, label_end);
     insert_cod(&While->code, instrucao);
 
     // Inserir o código do corpo do laço
@@ -252,7 +254,7 @@ void DoWhile(struct no *DoWhile, struct no Body, struct no Exp) {
     getName(Exp.place, name_cond);
 
     // Instrução de salto para o início do laço se a condição for verdadeira
-    sprintf(instrucao, "\tbne %s, $zero, %s\n", name_cond, label_start);
+    sprintf(instrucao, "\tbne %s,$zero,%s\n", name_cond, label_start);
     insert_cod(&DoWhile->code, instrucao);
 }
 

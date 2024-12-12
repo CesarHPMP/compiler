@@ -9,11 +9,13 @@
     #endif
 	#include <stdlib.h>
     int nline = 1;
+    int yy_tipo;
 %}
 
 dig [0-9]
 letra [a-zA-Z]
 underscore ["_"]
+zero[0]
 
 %%
 
@@ -52,14 +54,21 @@ underscore ["_"]
 "lechar" {return CHAR;}
 "shotclock_expired" {return ENDIF;}
 
+("-")?{dig}+("."{zero}+)? {
+    yylval.ival = atoi(yytext);
+    yy_tipo = INT;
+    return NUM;
+    }
+
 ("-")?{dig}+("."{dig}+)? {
-	yylval.ival = atof(yytext);
+    yylval.fval = atof(yytext);
+    yy_tipo = FLOAT;
+
 	return NUM;
 	}
 
 {letra}({letra}|{dig}|{underscore})*  {
     yylval.val = insere(yytext); 
-    printf("INSERIDO : %s\n", yytext);
     return ID;
     }  
 
@@ -80,6 +89,6 @@ int yywrap() { return 1; }
 
 int yyerror(char *s)
 {
-	fprintf(stderr,"%s na linha %d\n", s, nline);
+	printf("%s na linha %d\n", s, nline);
 	exit(0);
 }
