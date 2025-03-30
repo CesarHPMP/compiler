@@ -1,0 +1,41 @@
+main:
+	li $t0,0
+	move $s1,$t0
+	li $t1,5
+	move $s2,$t1
+	li $t2,10
+	move $s3,$t2
+L4:
+	li $t3,1
+	blt $s1,$s2,L1
+	li $t3,0
+L1:
+	beq $t3,0,L5
+	li $t4,3
+	li $t5,1
+	beq $s1,$t4,L2
+	li $t5,0
+L2:
+	beq $t5,0,L3
+	li $t6,5
+	add $t7,$s3,$t6
+	move $s3,$t7
+L3:
+	li $t8,1
+	add $t9,$s1,$t8
+	move $s1,$t9
+	j L4
+L5:
+	li $t10,3
+	li $t11,1
+	blt $s2,$t10,L6
+	li $t11,0
+L6:
+	beq $t11,0,L7
+	li $t12,0
+	move $s3,$t12
+L7:
+	move $s1,$s3
+	li $v0,10
+	syscall
+
